@@ -1,0 +1,70 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "bey:weapon_combiner_display",
+      "materials": {
+        "default": "entity_alphatest",
+        "amethyst_shard": "entity_alphatest",
+        "nether_star": "entity_alphatest",
+        "oak_leaves": "entity_alphatest",
+        "crying_obsidian": "entity_alphatest",
+        "echo_shard": "entity_alphatest",
+        "froglight": "entity_alphatest",
+        "enchanted_golden_apple": "entity_alphatest",
+        "magma": "entity_alphatest",
+        "rabbit": "entity_alphatest",
+        "redstone": "entity_alphatest",
+        "sea": "entity_alphatest",
+        "tnt": "entity_alphatest",
+        "totem": "entity_alphatest",
+        "wither_rose": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/weapon_combiner_display_empty",
+        "amethyst_shard": "textures/items/amethyst_shard",
+        "nether_star": "textures/items/nether_star",
+        "oak_leaves": "textures/blocks/pale_oak_leaves",
+        "crying_obsidian": "textures/blocks/crying_obsidian",
+        "echo_shard": "textures/items/echo_shard",
+        "froglight": "textures/blocks/ochre_froglight_side",
+        "enchanted_golden_apple": "textures/items/apple_golden",
+        "magma": "textures/blocks/magma",
+        "rabbit": "textures/items/rabbit_foot",
+        "redstone": "textures/items/redstone_dust",
+        "sea": "textures/items/heartofthesea_closed",
+        "tnt": "textures/blocks/tnt_side",
+        "totem": "textures/items/totem",
+        "wither_rose": "textures/blocks/flower_wither_rose"
+      },
+      "geometry": {
+        "default": "geometry.weapon_combiner_display",
+        "amethyst_shard": "geometry.weapon_combiner_display",
+        "nether_star": "geometry.weapon_combiner_displayNet",
+        "oak_leaves": "geometry.weapon_combiner_display",
+        "crying_obsidian": "geometry.weapon_combiner_display",
+        "echo_shard": "geometry.weapon_combiner_display",
+        "froglight": "geometry.weapon_combiner_display",
+        "enchanted_golden_apple": "geometry.weapon_combiner_display",
+        "magma": "geometry.weapon_combiner_display",
+        "rabbit": "geometry.weapon_combiner_display",
+        "redstone": "geometry.weapon_combiner_display",
+        "sea": "geometry.weapon_combiner_display",
+        "tnt": "geometry.weapon_combiner_display",
+        "totem": "geometry.weapon_combiner_display",
+        "wither_rose": "geometry.weapon_combiner_display"
+      },
+      "animations": {
+        "rotate": "animation.weapon_combiner_display.rotate"
+      },
+      "scripts": {
+        "animate": ["rotate"]
+      },
+      "render_controllers": ["controller.render.weapon_combiner_display"],
+      "spawn_egg": {
+        "base_color": "#288483",
+        "overlay_color": "#2B7135"
+      }
+    }
+  }
+}

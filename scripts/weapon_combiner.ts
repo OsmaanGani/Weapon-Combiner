@@ -214,7 +214,7 @@ export function weapon_combiner() {
 
           let currentLore = item.getLore() || [];
           if (currentLore.length >= 6) {
-            return; // Prevent adding more lores
+            return;
           }
 
           const abilitiesForWeapon = WEAPON_ABILITIES.filter((a) => a.weaponTag === customTag);

@@ -1,0 +1,69 @@
+{
+  "format_version": "1.8.0",
+  "render_controllers": {
+    "controller.render.weapon_combiner_display": {
+      "arrays": {
+        "geometries": {
+          "Array.geometry_skins": [
+            "Geometry.default",
+            "Geometry.amethyst_shard",
+            "Geometry.nether_star",
+            "Geometry.oak_leaves",
+            "Geometry.crying_obsidian",
+            "Geometry.echo_shard",
+            "Geometry.froglight",
+            "Geometry.enchanted_golden_apple",
+            "Geometry.magma",
+            "Geometry.rabbit",
+            "Geometry.redstone",
+            "Geometry.sea",
+            "Geometry.tnt",
+            "Geometry.totem",
+            "Geometry.wither_rose"
+          ]
+        },
+        "textures": {
+          "Array.texture_skins": [
+            "Texture.default",
+            "Texture.amethyst_shard",
+            "Texture.nether_star",
+            "Texture.oak_leaves",
+            "Texture.crying_obsidian",
+            "Texture.echo_shard",
+            "Texture.froglight",
+            "Texture.enchanted_golden_apple",
+            "Texture.magma",
+            "Texture.rabbit",
+            "Texture.redstone",
+            "Texture.sea",
+            "Texture.tnt",
+            "Texture.totem",
+            "Texture.wither_rose"
+          ]
+        },
+        "materials": {
+          "Array.material_skins": [
+            "Material.default",
+            "Material.amethyst_shard",
+            "Material.nether_star",
+            "Material.oak_leaves",
+            "Material.crying_obsidian",
+            "Material.echo_shard",
+            "Material.froglight",
+            "Material.enchanted_golden_apple",
+            "Material.magma",
+            "Material.rabbit",
+            "Material.redstone",
+            "Material.sea",
+            "Material.tnt",
+            "Material.totem",
+            "Material.wither_rose"
+          ]
+        }
+      },
+      "geometry": "Array.geometry_skins[query.variant]",
+      "materials": [{ "*": "Array.material_skins[query.variant]" }],
+      "textures": ["Array.texture_skins[query.variant]"]
+    }
+  }
+}

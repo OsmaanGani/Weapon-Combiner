@@ -1,0 +1,164 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "bey:weapon_combiner_display",
+      "is_spawnable": false,
+      "is_summonable": true
+    },
+    "component_groups": {
+      "bey:variantAme": {
+        "minecraft:variant": {
+          "value": 1
+        }
+      },
+      "bey:variantNet": {
+        "minecraft:variant": {
+          "value": 2
+        }
+      },
+      "bey:variantOak": {
+        "minecraft:variant": {
+          "value": 3
+        }
+      },
+      "bey:variantCry": {
+        "minecraft:variant": {
+          "value": 4
+        }
+      },
+      "bey:variantEch": {
+        "minecraft:variant": {
+          "value": 5
+        }
+      },
+      "bey:variantFrg": {
+        "minecraft:variant": {
+          "value": 6
+        }
+      },
+      "bey:variantEga": {
+        "minecraft:variant": {
+          "value": 7
+        }
+      },
+      "bey:variantMag": {
+        "minecraft:variant": {
+          "value": 8
+        }
+      },
+      "bey:variantRab": {
+        "minecraft:variant": {
+          "value": 9
+        }
+      },
+      "bey:variantRed": {
+        "minecraft:variant": {
+          "value": 10
+        }
+      },
+      "bey:variantSea": {
+        "minecraft:variant": {
+          "value": 11
+        }
+      },
+      "bey:variantTnt": {
+        "minecraft:variant": {
+          "value": 12
+        }
+      },
+      "bey:variantTot": {
+        "minecraft:variant": {
+          "value": 13
+        }
+      },
+      "bey:variantWit": {
+        "minecraft:variant": {
+          "value": 14
+        }
+      }
+    },
+    "components": {
+      "minecraft:collision_box": {
+        "height": 0,
+        "width": 0
+      },
+      "minecraft:physics": {
+        "has_collision": false,
+        "has_gravity": false
+      }
+    },
+    "events": {
+      "bey:varAme": {
+        "add": {
+          "component_groups": ["bey:variantAme"]
+        }
+      },
+      "bey:varNet": {
+        "add": {
+          "component_groups": ["bey:variantNet"]
+        }
+      },
+      "bey:varCry": {
+        "add": {
+          "component_groups": ["bey:variantCry"]
+        }
+      },
+      "bey:varEch": {
+        "add": {
+          "component_groups": ["bey:variantEch"]
+        }
+      },
+      "bey:varEga": {
+        "add": {
+          "component_groups": ["bey:variantEga"]
+        }
+      },
+      "bey:varFrg": {
+        "add": {
+          "component_groups": ["bey:variantFrg"]
+        }
+      },
+      "bey:varMag": {
+        "add": {
+          "component_groups": ["bey:variantMag"]
+        }
+      },
+      "bey:varOak": {
+        "add": {
+          "component_groups": ["bey:variantOak"]
+        }
+      },
+      "bey:varRab": {
+        "add": {
+          "component_groups": ["bey:variantRab"]
+        }
+      },
+      "bey:varRed": {
+        "add": {
+          "component_groups": ["bey:variantRed"]
+        }
+      },
+      "bey:varSea": {
+        "add": {
+          "component_groups": ["bey:variantSea"]
+        }
+      },
+      "bey:varTnt": {
+        "add": {
+          "component_groups": ["bey:variantTnt"]
+        }
+      },
+      "bey:varTot": {
+        "add": {
+          "component_groups": ["bey:variantTot"]
+        }
+      },
+      "bey:varWit": {
+        "add": {
+          "component_groups": ["bey:variantWit"]
+        }
+      }
+    }
+  }
+}
