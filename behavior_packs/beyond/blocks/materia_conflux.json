@@ -1,0 +1,145 @@
+{
+	"format_version": "1.20.80",
+	"minecraft:block": {
+		"description": {
+			"identifier": "bey:materia_conflux",
+			"states": {
+				"bey:materia_conflux": [
+					0,
+					1,
+					2,
+					3,
+					4,
+					5,
+					6,
+					7,
+					8,
+					9,
+					10,
+					11,
+					12,
+					13,
+					14,
+					15
+				]
+			},
+			"menu_category": {
+				"category": "equipment",
+				"group": "equipment"
+			}
+		},
+		"components": {
+			"minecraft:geometry": "geometry.materia_conflux",
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "bey_materia_conflux",
+					"render_method": "alpha_test"
+				}
+			},
+			"minecraft:collision_box": true,
+			"minecraft:custom_components": [
+				"bey:materia_conflux_function"
+			],
+			"minecraft:light_emission": 7,
+			"minecraft:destructible_by_mining": {
+				"seconds_to_destroy": 0.7
+			}
+		},
+		"permutations": [
+			{
+				"condition": "q.block_state('bey:materia_conflux') == 0",
+				"components": {}
+			},
+			{
+				"condition": "q.block_state('bey:materia_conflux') == 1",
+				"components": {
+					"minecraft:light_emission": 15
+				}
+			},
+			{
+				"condition": "q.block_state('bey:materia_conflux') == 2",
+				"components": {
+					"minecraft:light_emission": 15
+				}
+			},
+			{
+				"condition": "q.block_state('bey:materia_conflux') == 3",
+				"components": {
+					"minecraft:light_emission": 15
+				}
+			},
+			{
+				"condition": "q.block_state('bey:materia_conflux') == 4",
+				"components": {
+					"minecraft:light_emission": 15
+				}
+			},
+			{
+				"condition": "q.block_state('bey:materia_conflux') == 5",
+				"components": {
+					"minecraft:light_emission": 15
+				}
+			},
+			{
+				"condition": "q.block_state('bey:materia_conflux') == 6",
+				"components": {
+					"minecraft:light_emission": 15
+				}
+			},
+			{
+				"condition": "q.block_state('bey:materia_conflux') == 7",
+				"components": {
+					"minecraft:light_emission": 15
+				}
+			},
+			{
+				"condition": "q.block_state('bey:materia_conflux') == 8",
+				"components": {
+					"minecraft:light_emission": 15
+				}
+			},
+			{
+				"condition": "q.block_state('bey:materia_conflux') == 9",
+				"components": {
+					"minecraft:light_emission": 15
+				}
+			},
+			{
+				"condition": "q.block_state('bey:materia_conflux') == 10",
+				"components": {
+					"minecraft:light_emission": 15
+				}
+			},
+			{
+				"condition": "q.block_state('bey:materia_conflux') == 11",
+				"components": {
+					"minecraft:light_emission": 15
+				}
+			},
+			{
+				"condition": "q.block_state('bey:materia_conflux') == 12",
+				"components": {
+					"minecraft:light_emission": 15
+				}
+			},
+			{
+				"condition": "q.block_state('bey:materia_conflux') == 13",
+				"components": {
+					"minecraft:light_emission": 15
+				}
+			},
+			{
+				"condition": "q.block_state('bey:materia_conflux') == 14",
+				"components": {
+					"minecraft:light_emission": 15
+				}
+			},
+			{
+				"condition": "q.block_state('bey:materia_conflux') == 15",
+				"components": {
+					"minecraft:light_emission": 15
+				}
+			}
+		]
+	}
+}

@@ -1,0 +1,50 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Weapon Combiner",
+    "description": "Weapon combiner is a addon made by Beyond64 that allows you to enchant your weapons with custom materials and get custom abilities",
+    "uuid": "9795a284-efb7-4d99-af97-5ddca633f4ab",
+    "version": [
+      1,
+      0,
+      0
+    ],
+    "min_engine_version": [
+      1,
+      21,
+      60
+    ]
+  },
+  "modules": [
+    {
+      "description": "Script resources",
+      "language": "javascript",
+      "type": "script",
+      "uuid": "7091cd6b-00d8-4552-ab41-899d8ea0cd68",
+      "version": [
+        1,
+        0,
+        0
+      ],
+      "entry": "scripts/main.js"
+    }
+  ],
+  "dependencies": [
+    {
+      "module_name": "@minecraft/server",
+      "version": [
+        1,
+        17,
+        0
+      ]
+    },
+    {
+      "uuid": "6bb0ca39-515b-4bdc-8e3f-0115c78e6765",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ]
+}

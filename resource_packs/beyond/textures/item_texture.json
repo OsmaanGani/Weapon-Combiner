@@ -1,0 +1,585 @@
+{
+	"resource_pack_name": "Weapon Combiner [Non-Experimental]",
+	"texture_name": "atlas.items",
+	"texture_data": {
+		"bey_amy_da": {
+			"textures": "textures/items/amythest_diamond_axe"
+		},
+		"bey_ame_dh": {
+			"textures": "textures/items/ame_Hammer_diamond"
+		},
+		"bey_amy_dm": {
+			"textures": "textures/items/amethyst_diamond_mace"
+		},
+		"bey_amy_dsc": {
+			"textures": "textures/items/amethyst_diamond_scythe_def"
+		},
+		"bey_amy_ds": {
+			"textures": "textures/items/amethyst_diamond_sword"
+		},
+		"bey_amy_is": {
+			"textures": "textures/items/amethyst_iron_sword"
+		},
+		"bey_amy_ia": {
+			"textures": "textures/items/amythest_iron_axe"
+		},
+		"bey_amy_isc": {
+			"textures": "textures/items/amethyst_iron_scythe_def"
+		},
+		"bey_amy_im": {
+			"textures": "textures/items/amethyst_iron_mace"
+		},
+		"bey_amy_ih": {
+			"textures": "textures/items/ame__Hammer_iron"
+		},
+		"bey_amy_nh": {
+			"textures": "textures/items/ame_Hammer_Netherite"
+		},
+		"bey_amy_nm": {
+			"textures": "textures/items/amethyst_netherite_mace"
+		},
+		"bey_amy_nsc": {
+			"textures": "textures/items/amethyst_netherite_scythe_def"
+		},
+		"bey_amy_ns": {
+			"textures": "textures/items/amethyst_netherite_sword"
+		},
+		"bey_amy_na": {
+			"textures": "textures/items/amythest_netherite_axe"
+		},
+		"bey_bea_ds": {
+			"textures": "textures/items/Beacon_diamond_Sword"
+		},
+		"bey_bea_da": {
+			"textures": "textures/items/beacon_diamond_axe"
+		},
+		"bey_bea_dh": {
+			"textures": "textures/items/beacon_Hammer_diamond"
+		},
+		"bey_bea_dm": {
+			"textures": "textures/items/beacon_diamond_mace"
+		},
+		"bey_bea_dsc": {
+			"textures": "textures/items/beacon_diamond_scythe_def"
+		},
+		"bey_bea_isc": {
+			"textures": "textures/items/beacon_iron_scythe_def"
+		},
+		"bey_bea_im": {
+			"textures": "textures/items/beacon_iron_mace"
+		},
+		"bey_beacon_ih": {
+			"textures": "textures/items/beacon_Hammer_iron"
+		},
+		"bey_bea_ia": {
+			"textures": "textures/items/beacon_iron_axe"
+		},
+		"bey_bea_is": {
+			"textures": "textures/items/Beacon_iron_Sword"
+		},
+		"bey_bea_ns": {
+			"textures": "textures/items/Beacon_netherite_Sword"
+		},
+		"bey_bea_na": {
+			"textures": "textures/items/beacon_netherite_axe"
+		},
+		"bey_bea_nsc": {
+			"textures": "textures/items/beacon_netherite_scythe_def"
+		},
+		"bey_bea_nm": {
+			"textures": "textures/items/beacon_netherite_mace"
+		},
+		"bey_bea_nh": {
+			"textures": "textures/items/beacon_Hammer_Netherite"
+		},
+		"bey_cam_ds": {
+			"textures": "textures/items/camaflug_diamond_sword"
+		},
+		"bey_cam_is": {
+			"textures": "textures/items/camaflug_iron_sword"
+		},
+		"bey_cam_ns": {
+			"textures": "textures/items/camaflug_netherite_sword"
+		},
+		"bey_cry_ds": {
+			"textures": "textures/items/Crysing_obsidian_diamond_sword"
+		},
+		"bey_cry_da": {
+			"textures": "textures/items/crying_obsidian_diamond_axe"
+		},
+		"bey_cry_dh": {
+			"textures": "textures/items/crying_Hammer_diamond"
+		},
+		"bey_cry_dm": {
+			"textures": "textures/items/crying_diamond_mace"
+		},
+		"bey_cry_im": {
+			"textures": "textures/items/crying_iron_mace"
+		},
+		"bey_cry_ih": {
+			"textures": "textures/items/crying_Hammer_iron"
+		},
+		"bey_cry_is": {
+			"textures": "textures/items/Crysing_obsidian_iron_sword"
+		},
+		"bey_cry_ia": {
+			"textures": "textures/items/crying_obsidian_iron_axe"
+		},
+		"bey_cry_na": {
+			"textures": "textures/items/crying_obsidian_netherite_axe"
+		},
+		"bey_cry_ns": {
+			"textures": "textures/items/Crysing_obsidian_netherite_sword"
+		},
+		"bey_cry_nh": {
+			"textures": "textures/items/crying_Hammer_Netherite"
+		},
+		"bey_cry_nm": {
+			"textures": "textures/items/crying_netherite_mace"
+		},
+		"bey_deep_ds": {
+			"textures": "textures/items/deepdark_diamond_sword"
+		},
+		"bey_ender_ds": {
+			"textures": "textures/items/Ender_dragon_egg_Diamond_Sword"
+		},
+		"bey_pearl_ds": {
+			"textures": "textures/items/Ender_Peral_Diamond_Sword"
+		},
+		"bey_god_ds": {
+			"textures": "textures/items/GodApple_Diamond_Sword"
+		},
+		"bey_magma_ds": {
+			"textures": "textures/items/magma_diamond_sword"
+		},
+		"bey_redstone_ds": {
+			"textures": "textures/items/redstone_diamond_sword"
+		},
+		"bey_totem_ds": {
+			"textures": "textures/items/Totem_diamond_Sword"
+		},
+		"bey_wither_ds": {
+			"textures": "textures/items/wither_diamond_sword"
+		},
+		"bey_deep_is": {
+			"textures": "textures/items/deepdark_iron_sword"
+		},
+		"bey_ender_is": {
+			"textures": "textures/items/Ender_dragon_egg_iron_Sword"
+		},
+		"bey_pearl_is": {
+			"textures": "textures/items/Ender_Peral_Iron_Sword"
+		},
+		"bey_god_is": {
+			"textures": "textures/items/GodApple_Iron_Sword"
+		},
+		"bey_magma_is": {
+			"textures": "textures/items/magma_iron_sword"
+		},
+		"bey_redstone_is": {
+			"textures": "textures/items/redstone_iron_sword"
+		},
+		"bey_totem_is": {
+			"textures": "textures/items/Totem_Iron_Sword"
+		},
+		"bey_wither_is": {
+			"textures": "textures/items/wither_iron_sword"
+		},
+		"bey_deep_ns": {
+			"textures": "textures/items/deepdark_netherite_sword"
+		},
+		"bey_god_ns": {
+			"textures": "textures/items/GodApple_Netherite_Sword"
+		},
+		"bey_magma_ns": {
+			"textures": "textures/items/magma_netherite_sword"
+		},
+		"bey_redstone_ns": {
+			"textures": "textures/items/redstone_netherite_sword"
+		},
+		"bey_totem_ns": {
+			"textures": "textures/items/Totem_Netherite_Sword"
+		},
+		"bey_wither_ns": {
+			"textures": "textures/items/wither_netherite_sword"
+		},
+		"bey_pearl_ns": {
+			"textures": "textures/items/Ender_Peral_Netherite_Sword"
+		},
+		"bey_ender_ns": {
+			"textures": "textures/items/Ender_dragon_egg_Netherite_Sword"
+		},
+		"bey_deep_da": {
+			"textures": "textures/items/deepdark_diamond_axe"
+		},
+		"bey_ender_da": {
+			"textures": "textures/items/dragon_egg_diamond_axe"
+		},
+		"bey_pearl_da": {
+			"textures": "textures/items/ender_pearl_diamond_axe"
+		},
+		"bey_god_da": {
+			"textures": "textures/items/god_apple_diamond_axe"
+		},
+		"bey_magma_da": {
+			"textures": "textures/items/magma_diamond_axe"
+		},
+		"bey_redstone_da": {
+			"textures": "textures/items/redstone_diamond_axe"
+		},
+		"bey_totem_da": {
+			"textures": "textures/items/tombstone_diamond_axe"
+		},
+		"bey_wither_da": {
+			"textures": "textures/items/wither_diamond_axe"
+		},
+		"bey_deep_ia": {
+			"textures": "textures/items/deepdark_iron_axe"
+		},
+		"bey_ender_ia": {
+			"textures": "textures/items/dragon_egg_iron_axe"
+		},
+		"bey_pearl_ia": {
+			"textures": "textures/items/ender_pearl_iron_axe"
+		},
+		"bey_god_ia": {
+			"textures": "textures/items/god_apple_iron_axe"
+		},
+		"bey_magma_ia": {
+			"textures": "textures/items/magma_iron_axe"
+		},
+		"bey_redstone_ia": {
+			"textures": "textures/items/redstone_iron_axe"
+		},
+		"bey_totem_ia": {
+			"textures": "textures/items/tombstone_iron_axe"
+		},
+		"bey_wither_ia": {
+			"textures": "textures/items/wither_iron_axe"
+		},
+		"bey_deep_na": {
+			"textures": "textures/items/deepdark_netherite_axe"
+		},
+		"bey_ender_na": {
+			"textures": "textures/items/dragon_egg_netherite_axe"
+		},
+		"bey_pearl_na": {
+			"textures": "textures/items/ender_pearl_netherite_axe"
+		},
+		"bey_god_na": {
+			"textures": "textures/items/god_apple_netherite_axe"
+		},
+		"bey_magma_na": {
+			"textures": "textures/items/magma_netherite_axe"
+		},
+		"bey_redstone_na": {
+			"textures": "textures/items/redstone_netherite_axe"
+		},
+		"bey_totem_na": {
+			"textures": "textures/items/tombstone_netherite_axe"
+		},
+		"bey_wither_na": {
+			"textures": "textures/items/wither_netherite_axe"
+		},
+		"bey_default_dsc": {
+			"textures": "textures/items/1_diamond_scythe_def"
+		},
+		"bey_default_isc": {
+			"textures": "textures/items/1_iron_scythe_def"
+		},
+		"bey_defaut_nsc": {
+			"textures": "textures/items/1_netherite_scythe_def"
+		},
+		"bey_god_dsc": {
+			"textures": "textures/items/godapple_diamond_scythe_def"
+		},
+		"bey_magma_dsc": {
+			"textures": "textures/items/magma_diamond_scythe_def"
+		},
+		"bey_totem_dsc": {
+			"textures": "textures/items/totem_diamond_scythe_def"
+		},
+		"bey_wither_dsc": {
+			"textures": "textures/items/wither_diamond_scythe_def"
+		},
+		"bey_god_isc": {
+			"textures": "textures/items/godapple_tron_scythe_def"
+		},
+		"bey_magma_isc": {
+			"textures": "textures/items/magma_iron_scythe_def"
+		},
+		"bey_totem_isc": {
+			"textures": "textures/items/totem_iron_scythe_def"
+		},
+		"bey_wither_isc": {
+			"textures": "textures/items/wither_iron_scythe_def"
+		},
+		"bey_god_nsc": {
+			"textures": "textures/items/godapple_netherite_scythe_def (3)"
+		},
+		"bey_magma_nsc": {
+			"textures": "textures/items/magma_netherite_scythe_def"
+		},
+		"bey_totem_nsc": {
+			"textures": "textures/items/totem_netherite_scythe_def"
+		},
+		"bey_wither_nsc": {
+			"textures": "textures/items/wither_netherite_scythe_def"
+		},
+		"bey_default_dh": {
+			"textures": "textures/items/Def_Hammer_diamond"
+		},
+		"bey_default_ih": {
+			"textures": "textures/items/Def_Hammer_iron"
+		},
+		"bey_default_nh": {
+			"textures": "textures/items/Def_Hammer_Netherite"
+		},
+		"bey_deep_dh": {
+			"textures": "textures/items/deepdark_Hammer_diamond"
+		},
+		"bey_pearl_dh": {
+			"textures": "textures/items/enderpearl_Hammer_diamond"
+		},
+		"bey_magma_dh": {
+			"textures": "textures/items/magma_Hammer_diamond"
+		},
+		"bey_redstone_dh": {
+			"textures": "textures/items/redstone_Hammer_diamond"
+		},
+		"bey_totem_dh": {
+			"textures": "textures/items/totem_Hammer_diamond"
+		},
+		"bey_deep_ih": {
+			"textures": "textures/items/deepdark_Hammer_iron"
+		},
+		"bey_ender_ih": {
+			"textures": "textures/items/ender_Hammer_iron"
+		},
+		"bey_magma_ih": {
+			"textures": "textures/items/magma_Hammer_iron"
+		},
+		"bey_redstone_ih": {
+			"textures": "textures/items/redstone_Hammer_iron"
+		},
+		"bey_totem_ih": {
+			"textures": "textures/items/totem_Hammer_iron"
+		},
+		"bey_deep_nh": {
+			"textures": "textures/items/deepdark_Hammer_Netherite"
+		},
+		"bey_ender_nh": {
+			"textures": "textures/items/enderpearl_Hammer_Netherite"
+		},
+		"bey_magma_nh": {
+			"textures": "textures/items/magma_Hammer_Netherite"
+		},
+		"bey_redstone_nh": {
+			"textures": "textures/items/redstone_Hammer_Netherite"
+		},
+		"bey_totem_nh": {
+			"textures": "textures/items/totem_Hammer_Netherite"
+		},
+		"bey_default_dm": {
+			"textures": "textures/items/def_diamond_mace"
+		},
+		"bey_default_im": {
+			"textures": "textures/items/def_iron_mace"
+		},
+		"bey_default_nm": {
+			"textures": "textures/items/def_netherite_mace"
+		},
+		"bey_deep_dm": {
+			"textures": "textures/items/deep_darkdiamond_mace"
+		},
+		"bey_pearl_dm": {
+			"textures": "textures/items/enderpearl_diamond_mace"
+		},
+		"bey_god_dm": {
+			"textures": "textures/items/godapple_diamond_mace"
+		},
+		"bey_magma_dm": {
+			"textures": "textures/items/magma_diamond_mace"
+		},
+		"bey_redstone_dm": {
+			"textures": "textures/items/redstone_diamond_mace"
+		},
+		"bey_totem_dm": {
+			"textures": "textures/items/totem_diamond_mace"
+		},
+		"bey_deep_im": {
+			"textures": "textures/items/deep_dark_iron_mace"
+		},
+		"bey_pearl_im": {
+			"textures": "textures/items/enderpearl_iron_mace"
+		},
+		"bey_god_im": {
+			"textures": "textures/items/godapple_iron_mace"
+		},
+		"bey_magma_im": {
+			"textures": "textures/items/magma_iron_mace"
+		},
+		"bey_redstone_im": {
+			"textures": "textures/items/redstone_iron_mace"
+		},
+		"bey_totem_im": {
+			"textures": "textures/items/totem_iron_mace"
+		},
+		"bey_deep_nm": {
+			"textures": "textures/items/deep_dark_netherite_mace"
+		},
+		"bey_pearl_nm": {
+			"textures": "textures/items/enderpearl_netherite_mace"
+		},
+		"bey_god_nm": {
+			"textures": "textures/items/godapple_netherite_mace"
+		},
+		"bey_magma_nm": {
+			"textures": "textures/items/magma_netherite_mace"
+		},
+		"bey_redstone_nm": {
+			"textures": "textures/items/redstone_netherite_mace"
+		},
+		"bey_totem_nm": {
+			"textures": "textures/items/totem_netherite_mace"
+		},
+		"bey_rabbit_ds": {
+			"textures": "textures/items/rabbit_sword_Diamond"
+		},
+		"bey_rabbit_dsc": {
+			"textures": "textures/items/rabbit_diamond_scythe"
+		},
+		"bey_rabbit_da": {
+			"textures": "textures/items/rabbit_diamond_axe"
+		},
+		"bey_rabbit_ia": {
+			"textures": "textures/items/rabbit_iron_axe"
+		},
+		"bey_rabbit_isc": {
+			"textures": "textures/items/rabbit_iron_scythe"
+		},
+		"bey_rabbit_is": {
+			"textures": "textures/items/rabbit_sword_iron"
+		},
+		"bey_rabbit_na": {
+			"textures": "textures/items/rabbit_netherite_axe"
+		},
+		"bey_rabbit_nsc": {
+			"textures": "textures/items/rabbit_netherite_scythe"
+		},
+		"bey_rabbit_ns": {
+			"textures": "textures/items/rabbit_sword_Netherite"
+		},
+		"bey_double_da": {
+			"textures": "textures/items/double_diamond_axe"
+		},
+		"bey_double_ia": {
+			"textures": "textures/items/double_iron_axe"
+		},
+		"bey_double_na": {
+			"textures": "textures/items/double_netherite_axe"
+		},
+		"bey_froglight_ds": {
+			"textures": "textures/items/Froglight_diamond_sword"
+		},
+		"bey_froglight_is": {
+			"textures": "textures/items/Froglight_iron_sword"
+		},
+		"bey_froglight_ns": {
+			"textures": "textures/items/Froglight_netherite_sword"
+		},
+		"bey_sea_da": {
+			"textures": "textures/items/Sea_diamond_axe,png"
+		},
+		"bey_sea_ia": {
+			"textures": "textures/items/Sea_iron_axe,png"
+		},
+		"bey_sea_na": {
+			"textures": "textures/items/Sea_netherite_axe,png"
+		},
+		"bey_tnt_da": {
+			"textures": "textures/items/TnT_diamond_sword"
+		},
+		"bey_tnt_ia": {
+			"textures": "textures/items/TnT_iron_sword"
+		},
+		"bey_tnt_na": {
+			"textures": "textures/items/TnT_netherite_sword"
+		},
+		"bey_amered_ds": {
+			"textures": "textures/items/amered_Diamond"
+		},
+		"bey_amered_is": {
+			"textures": "textures/items/amered_iron"
+		},
+		"bey_amered_ns": {
+			"textures": "textures/items/amred_Netherite"
+		},
+		"bey_deepresed_ds": {
+			"textures": "textures/items/deepresed_Diamond"
+		},
+		"bey_deepresed_is": {
+			"textures": "textures/items/depresed_iron"
+		},
+		"bey_deepresed_ns": {
+			"textures": "textures/items/depresed_Netherite"
+		},
+		"bey_godaxe_da": {
+			"textures": "textures/items/god_double_diamond_axe"
+		},
+		"bey_godaxe_ia": {
+			"textures": "textures/items/god_double_iron_axe"
+		},
+		"bey_godaxe_na": {
+			"textures": "textures/items/god_double_netherite_axe"
+		},
+		"bey_ame_template": {
+			"textures": "textures/items/ame_template"
+		},
+		"bey_beacon_template": {
+			"textures": "textures/items/beacon_template"
+		},
+		"bey_camafloug_template": {
+			"textures": "textures/items/cama_template"
+		},
+		"bey_crying_template": {
+			"textures": "textures/items/cryingobsidian_template"
+		},
+		"bey_deepdark_template": {
+			"textures": "textures/items/deepdark_template"
+		},
+		"bey_ender_dragon_template": {
+			"textures": "textures/items/enderdragon_template"
+		},
+		"bey_ender_pearl_template": {
+			"textures": "textures/items/enderpearl_template"
+		},
+		"bey_frog_template": {
+			"textures": "textures/items/frog_template"
+		},
+		"bey_god_template": {
+			"textures": "textures/items/god_template"
+		},
+		"bey_magma_template": {
+			"textures": "textures/items/magma_template"
+		},
+		"bey_redstone_template": {
+			"textures": "textures/items/redstone_template"
+		},
+		"bey_tnt_template": {
+			"textures": "textures/items/tnt_template"
+		},
+		"bey_totem_template": {
+			"textures": "textures/items/totem_template"
+		},
+		"bey_wither_template": {
+			"textures": "textures/items/wither_template"
+		},
+		"bey_rabbit_template": {
+			"textures": "textures/items/rabbit_template"
+		},
+		"bey_combo_crafter": {
+			"textures": "textures/entity/combo_crafter_egg"
+		}
+	}
+}

@@ -1,0 +1,67 @@
+{
+	"format_version": "1.21.20",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.materia_conflux",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 4.5,
+				"visible_bounds_offset": [0, 1.75, 0]
+			},
+			"bones": [
+				{
+					"name": "bone",
+					"pivot": [2, 13, 1]
+				},
+				{
+					"name": "mainBody",
+					"parent": "bone",
+					"pivot": [7, 0, -7],
+					"cubes": [
+						{
+							"origin": [-8, 0, -8],
+							"size": [16, 12, 16],
+							"uv": {
+								"north": {"uv": [0, 0], "uv_size": [16, 12]},
+								"east": {"uv": [0, 0], "uv_size": [16, 12]},
+								"south": {"uv": [0, 0], "uv_size": [16, 12]},
+								"west": {"uv": [0, 0], "uv_size": [16, 12]},
+								"up": {"uv": [32, 16], "uv_size": [-16, -16]},
+								"down": {"uv": [48, 16], "uv_size": [-16, -16]}
+							}
+						}
+					]
+				},
+				{
+					"name": "itemDisplay",
+					"parent": "bone",
+					"pivot": [7, 0, -7]
+				},
+				{
+					"name": "blockDisplay",
+					"parent": "bone",
+					"pivot": [7, 0, -7]
+				}
+			],
+			"item_display_transforms": {
+				"thirdperson_righthand": {
+					"rotation": [0, 0, 0],
+					"translation": [0, 0, 0],
+					"scale": [0.56, 0.56, 0.56],
+					"rotation_pivot": [0, 0, 0],
+					"scale_pivot": [0, 0, 0]
+				},
+				"gui": {
+					"rotation": [25, 45, 0],
+					"translation": [0, 0, 0],
+					"scale": [0.65, 0.65, 0.65],
+					"rotation_pivot": [0, 0, 0],
+					"scale_pivot": [0, 0, 0],
+					"fit_to_frame": false
+				}
+			}
+		}
+	]
+}

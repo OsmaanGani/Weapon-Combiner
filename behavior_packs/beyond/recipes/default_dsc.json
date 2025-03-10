@@ -1,0 +1,22 @@
+{
+	"format_version": "1.12",
+	"minecraft:recipe_shapeless": {
+		"description": {
+			"identifier": "bey:default_dsc"
+		},
+		"tags": [
+			"crafting_table"
+		],
+		"ingredients": [
+			{
+				"item": "flint"
+			},
+			{
+				"item": "diamond_sword"
+			}
+		],
+		"result": {
+			"item": "bey:default_dsc"
+		}
+	}
+}

@@ -1,0 +1,27 @@
+{
+	"format_version": "1.12",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "bey:materia_conflux"
+		},
+		"tags": [
+			"crafting_table"
+		],
+		"key": {
+			"!": {
+				"item": "amethyst_shard"
+			},
+			"@": {
+				"item": "enchanting_table"
+			}
+		},
+		"pattern": [
+			" ! ",
+			" @ ",
+			" ! "
+		],
+		"result": {
+			"item": "bey:materia_conflux"
+		}
+	}
+}

@@ -1,0 +1,194 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "bey:amy_da",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:amy_dm",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:amy_ds",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:ame_dh",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:amy_dsc",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:bea_da",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:bea_dm",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:bea_ds",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:bea_dh",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:bea_dsc",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:cry_da",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:cry_dm",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:cry_ds",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:cry_dh",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:deep_da",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:deep_dm",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:deep_ds",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:deep_dh",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:ender_da",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:ender_ds",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:god_da",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "bey:god_dm",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "bey:god_ds",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "bey:god_dsc",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "bey:magma_dsc",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:pearl_ds",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:pearl_dh",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:redstone_dh",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:redstone_ds",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:totem_dh",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "bey:totem_dsc",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "bey:wither_da",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:wither_ds",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:wither_dsc",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:rabbit_da",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:rabbit_ds",
+          "weight": 2
+        },
+        {
+          "type": "item",
+          "name": "bey:rabbit_dsc",
+          "weight": 2
+        }
+      ]
+    }
+  ]
+}

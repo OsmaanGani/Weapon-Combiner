@@ -1,0 +1,23 @@
+{
+	"num_mip_levels": 4,
+	"padding": 8,
+	"resource_pack_name": "Weapon Combiner [Non-Experimental]",
+	"texture_name": "atlas.terrain",
+	"texture_data": {
+		"bey_weapon_lucky_block_diamond": {
+			"textures": "textures/blocks/WeaponLuckyDiamond"
+		},
+		"bey_weapon_lucky_block_iron": {
+			"textures": "textures/blocks/WeaponLuckyIron"
+		},
+		"bey_weapon_lucky_block_netherite": {
+			"textures": "textures/blocks/WeaponLuckyNetherite"
+		},
+		"bey_materia_conflux": {
+			"textures": "textures/blocks/materia/materia_conflux"
+		},
+		"bey_materia_conflux_amethyst": {
+			"textures": "textures/blocks/materia/materia_conflux_amethyst"
+		}
+	}
+}

@@ -1,0 +1,11 @@
+{
+	"format_version": "1.14.0",
+	"sound_definitions": {
+		"bey_place_sound": {
+			"sounds": [
+				"sounds/block/amethyst/place3"
+			],
+			"max_distance": 8
+		}
+	}
+}

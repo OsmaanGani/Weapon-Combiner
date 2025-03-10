@@ -1,0 +1,22 @@
+{
+	"format_version": [
+		1,
+		1,
+		0
+	],
+	"bey:weapon_lucky_block_diamond": {
+		"sound": "stone",
+		"textures": "bey_weapon_lucky_block_diamond"
+	},
+	"bey:weapon_lucky_block_iron": {
+		"sound": "stone",
+		"textures": "bey_weapon_lucky_block_iron"
+	},
+	"bey:weapon_lucky_block_netherite": {
+		"sound": "stone",
+		"textures": "bey_weapon_lucky_block_netherite"
+	},
+	"bey:materia_conflux": {
+		"sound": "stone"
+	}
+}

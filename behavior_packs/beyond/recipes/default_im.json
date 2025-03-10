@@ -1,0 +1,22 @@
+{
+	"format_version": "1.12",
+	"minecraft:recipe_shapeless": {
+		"description": {
+			"identifier": "bey:default_im"
+		},
+		"tags": [
+			"crafting_table"
+		],
+		"ingredients": [
+			{
+				"item": "iron_block"
+			},
+			{
+				"item": "iron_axe"
+			}
+		],
+		"result": {
+			"item": "bey:default_im"
+		}
+	}
+}

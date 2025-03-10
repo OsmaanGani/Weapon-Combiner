@@ -1,0 +1,194 @@
+{
+	"pools": [
+		{
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "item",
+					"name": "bey:amy_na",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:amy_nm",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:amy_ns",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:ame_nh",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:amy_nsc",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:bea_na",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:bea_nm",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:bea_ns",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:bea_nh",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:bea_nsc",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:cry_na",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:cry_nm",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:cry_ns",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:cry_nh",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:deep_na",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:deep_nm",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:deep_ns",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:deep_nh",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:ender_na",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:ender_ns",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:god_na",
+					"weight": 1
+				},
+				{
+					"type": "item",
+					"name": "bey:god_nm",
+					"weight": 1
+				},
+				{
+					"type": "item",
+					"name": "bey:god_ns",
+					"weight": 1
+				},
+				{
+					"type": "item",
+					"name": "bey:god_nsc",
+					"weight": 1
+				},
+				{
+					"type": "item",
+					"name": "bey:magma_nsc",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:pearl_ns",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:pearl_nh",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:redstone_nh",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:redstone_ns",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:totem_nh",
+					"weight": 1
+				},
+				{
+					"type": "item",
+					"name": "bey:totem_nsc",
+					"weight": 1
+				},
+				{
+					"type": "item",
+					"name": "bey:wither_na",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:wither_ns",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:wither_nsc",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:rabbit_na",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:rabbit_ns",
+					"weight": 2
+				},
+				{
+					"type": "item",
+					"name": "bey:rabbit_nsc",
+					"weight": 2
+				}
+			]
+		}
+	]
+}

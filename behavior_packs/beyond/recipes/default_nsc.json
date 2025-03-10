@@ -1,0 +1,22 @@
+{
+	"format_version": "1.12",
+	"minecraft:recipe_shapeless": {
+		"description": {
+			"identifier": "bey:default_nsc"
+		},
+		"tags": [
+			"crafting_table"
+		],
+		"ingredients": [
+			{
+				"item": "flint"
+			},
+			{
+				"item": "netherite_sword"
+			}
+		],
+		"result": {
+			"item": "bey:defaut_nsc"
+		}
+	}
+}

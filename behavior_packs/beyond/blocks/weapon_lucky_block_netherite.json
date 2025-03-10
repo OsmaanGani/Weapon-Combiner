@@ -1,0 +1,19 @@
+{
+	"format_version": "1.20.80",
+	"minecraft:block": {
+		"description": {
+			"identifier": "bey:weapon_lucky_block_netherite",
+			"menu_category": {
+				"category": "equipment",
+				"group": "equipment"
+			}
+		},
+		"components": {
+			"minecraft:loot": "loot_tables/lucky_netherite.json",
+			"minecraft:destructible_by_mining": {
+				"seconds_to_destroy": 0.3
+			},
+			"minecraft:light_emission": 10
+		}
+	}
+}
