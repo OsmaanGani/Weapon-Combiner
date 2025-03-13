@@ -7,6 +7,11 @@
       "is_summonable": true
     },
     "component_groups": {
+      "bey:variantNull": {
+        "minecraft:variant": {
+          "value": 0
+        }
+      },
       "bey:variantAme": {
         "minecraft:variant": {
           "value": 1
@@ -86,9 +91,18 @@
       "minecraft:physics": {
         "has_collision": false,
         "has_gravity": false
+      },
+      "minecraft:knockback_resistance": {
+        "value": 10,
+        "max": 10
       }
     },
     "events": {
+      "bey:varNull": {
+        "add": {
+          "component_groups": ["bey:variantNull"]
+        }
+      },
       "bey:varAme": {
         "add": {
           "component_groups": ["bey:variantAme"]

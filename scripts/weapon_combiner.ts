@@ -87,10 +87,47 @@ export const WEAPON_ABILITIES = [
 ];
 
 export function weapon_combiner() {
+  const COMBINED_WEAPONS = [
+    { typeId: "minecraft:amethyst_shard", weapon: "amy", displayItem: "Ame", index: "1" },
+    { typeId: "minecraft:nether_star", weapon: "bea", displayItem: "Net", index: "2" },
+    { typeId: "minecraft:oak_leaves", weapon: "cam", displayItem: "Oak", index: "3" },
+    { typeId: "minecraft:crying_obsidian", weapon: "cry", displayItem: "Cry", index: "4" },
+    { typeId: "minecraft:echo_shard", weapon: "deep", displayItem: "Ech", index: "5" },
+    { typeId: "minecraft:ochre_froglight", weapon: "froglight", displayItem: "Frg", index: "6" },
+    { typeId: "minecraft:pearlescent_froglight", weapon: "froglight", displayItem: "Frg", index: "6" },
+    { typeId: "minecraft:verdant_froglight", weapon: "froglight", displayItem: "Frg", index: "6" },
+    { typeId: "minecraft:enchanted_golden_apple", weapon: "god", displayItem: "Ega", index: "7" },
+    { typeId: "minecraft:magma", weapon: "magma", displayItem: "Mag", index: "8" },
+    { typeId: "minecraft:rabbit_foot", weapon: "rabbit", displayItem: "Rab", index: "9" },
+    { typeId: "minecraft:redstone", weapon: "redstone", displayItem: "Red", index: "10" },
+    { typeId: "minecraft:heart_of_the_sea", weapon: "sea", displayItem: "Sea", index: "11" },
+    { typeId: "minecraft:tnt", weapon: "tnt", displayItem: "Tnt", index: "12" },
+    { typeId: "minecraft:totem_of_undying", weapon: "totem", displayItem: "Tot", index: "13" },
+    { typeId: "minecraft:wither_rose", weapon: "wither", displayItem: "Wit", index: "14" },
+  ];
+
+  const CHANGEABLE_WEAPONS = [
+    { typeId: "minecraft:iron_sword", itemTag: "is" },
+    { typeId: "minecraft:diamond_sword", itemTag: "ds" },
+    { typeId: "minecraft:netherite_sword", itemTag: "ns" },
+    { typeId: "minecraft:iron_axe", itemTag: "ia" },
+    { typeId: "minecraft:diamond_axe", itemTag: "da" },
+    { typeId: "minecraft:netherite_axe", itemTag: "na" },
+    { typeId: "bey:default_dh", itemTag: "dh" },
+    { typeId: "bey:default_ih", itemTag: "ih" },
+    { typeId: "bey:default_nh", itemTag: "nh" },
+    { typeId: "bey:default_dsc", itemTag: "dsc" },
+    { typeId: "bey:default_isc", itemTag: "isc" },
+    { typeId: "bey:defaut_nsc", itemTag: "nsc" },
+    { typeId: "bey:default_dm", itemTag: "dm" },
+    { typeId: "bey:default_im", itemTag: "im" },
+    { typeId: "bey:default_nm", itemTag: "nm" },
+  ];
+
   Minecraft.system.runInterval(() => {
     Minecraft.world.getAllPlayers().forEach((player) => {
       player.dimension.getEntities().forEach((entity) => {
-        if (entity.typeId.includes(`display_item`)) {
+        if (entity.typeId.includes(`bey:weapon_combiner_display`)) {
           const underBlock = entity.dimension.getBlock({
             x: Math.floor(entity.location.x),
             y: Math.floor(entity.location.y) - 1,
@@ -107,146 +144,117 @@ export function weapon_combiner() {
     });
   });
 
-  Minecraft.world.afterEvents.itemUseOn.subscribe((event) => {
-    const player = event.source;
-    const block = event.block;
-    if (block.permutation.matches(`bey:materia_conflux`)) {
-      let playerHeld = (player.getComponent(`equippable`) as Minecraft.EntityEquippableComponent).getEquipment(
-        Minecraft.EquipmentSlot.Mainhand
-      );
-      const state = block.permutation.getState("bey:materia_conflux");
-      let { x, y, z } = block.location;
-      if (state === undefined) return;
+  Minecraft.world.beforeEvents.worldInitialize.subscribe((initEvent) => {
+    initEvent.blockComponentRegistry.registerCustomComponent("bey:materia_conflux_function", {
+      onPlayerInteract: (event) => {
+        let player = event.player;
+        const block = event.block;
+        if (!player) return;
 
-      const COMBINED_WEAPONS = [
-        { typeId: "minecraft:amethyst_shard", weapon: "amy", displayItem: "amethyst", index: 1 },
-        { typeId: "minecraft:nether_star", weapon: "bea", displayItem: "beacon", index: 2 },
-        { typeId: "minecraft:oak_leaves", weapon: "cam", displayItem: "camafluge", index: 3 },
-        { typeId: "minecraft:crying_obsidian", weapon: "cry", displayItem: "crying", index: 4 },
-        { typeId: "minecraft:echo_shard", weapon: "deep", displayItem: "deep", index: 5 },
-        { typeId: "minecraft:ender_eye", weapon: "ender", displayItem: "ender", index: 6 },
-        { typeId: "minecraft:ochre_froglight", weapon: "froglight", displayItem: "froglight", index: 7 },
-        { typeId: "minecraft:pearlescent_froglight", weapon: "froglight", displayItem: "froglight", index: 7 },
-        { typeId: "minecraft:verdant_froglight", weapon: "froglight", displayItem: "froglight", index: 7 },
-        { typeId: "minecraft:enchanted_golden_apple", weapon: "god", displayItem: "god", index: 8 },
-        { typeId: "minecraft:magma", weapon: "magma", displayItem: "magma", index: 9 },
-        { typeId: "minecraft:rabbit_foot", weapon: "rabbit", displayItem: "rabbit", index: 10 },
-        { typeId: "minecraft:redstone", weapon: "redstone", displayItem: "redstone", index: 11 },
-        { typeId: "minecraft:heart_of_the_sea", weapon: "sea", displayItem: "sea", index: 12 },
-        { typeId: "minecraft:tnt", weapon: "tnt", displayItem: "tnt", index: 13 },
-        { typeId: "minecraft:totem_of_undying", weapon: "totem", displayItem: "totem", index: 14 },
-        { typeId: "minecraft:wither_rose", weapon: "wither", displayItem: "wither", index: 15 },
-      ];
+        let playerHeld = (player.getComponent("equippable") as Minecraft.EntityEquippableComponent).getEquipment(
+          Minecraft.EquipmentSlot.Mainhand
+        );
+        Minecraft.world.sendMessage(`${playerHeld?.typeId}`);
+        let { x, y, z } = block.location;
 
-      const CHANGEABLE_WEAPONS = [
-        { typeId: "minecraft:iron_sword", itemTag: "is" },
-        { typeId: "minecraft:diamond_sword", itemTag: "ds" },
-        { typeId: "minecraft:netherite_sword", itemTag: "ns" },
-        { typeId: "minecraft:iron_axe", itemTag: "ia" },
-        { typeId: "minecraft:diamond_axe", itemTag: "da" },
-        { typeId: "minecraft:netherite_axe", itemTag: "na" },
-        { typeId: "bey:default_dh", itemTag: "dh" },
-        { typeId: "bey:default_ih", itemTag: "ih" },
-        { typeId: "bey:default_nh", itemTag: "nh" },
-        { typeId: "bey:default_dsc", itemTag: "dsc" },
-        { typeId: "bey:default_isc", itemTag: "isc" },
-        { typeId: "bey:defaut_nsc", itemTag: "nsc" },
-        { typeId: "bey:default_dm", itemTag: "dm" },
-        { typeId: "bey:default_im", itemTag: "im" },
-        { typeId: "bey:default_nm", itemTag: "nm" },
-      ];
+        COMBINED_WEAPONS.forEach((key) => {
+          let entitiesAbove = block.dimension.getEntities().filter((entity) => {
+            let pos = entity.location;
+            return Math.floor(pos.x) === x && Math.floor(pos.y) === y + 1 && Math.floor(pos.z) === z;
+          });
 
-      const randomIndex = Math.floor(Math.random() * 4);
-      if (playerHeld == undefined) return;
-      let customTag = playerHeld.typeId.split(":")[1].split("_")[0];
+          if (entitiesAbove.length == 0) {
+            if (playerHeld && playerHeld.typeId === key.typeId) {
+              block.setPermutation(block.permutation.withState("bey:materia_conflux", 1));
+              block.dimension.runCommand(`/particle minecraft:totem_particle ${x} ${y + 1} ${z}`);
+              Minecraft.world.playSound("bey_place_sound", block.location, { volume: 10, pitch: 0.3 });
 
-      COMBINED_WEAPONS.forEach((key) => {
-        if (playerHeld && playerHeld.typeId === key.typeId && state === 0) {
-          block.setPermutation(block.permutation.withState("bey:materia_conflux", key.index));
-          block.dimension.runCommand(`/particle minecraft:totem_particle ${x} ${y + 1} ${z}`);
-          Minecraft.world.playSound(`bey_place_sound`, block.location, { volume: 10, pitch: 0.3 });
-          block.dimension.runCommand(`/summon bey:display_item_${key.displayItem} ${x} ${y + 1} ${z}`);
-          player.runCommand(`/clear @s ${key.typeId} 0 1`);
-        }
+              let entity = block.dimension.spawnEntity("bey:weapon_combiner_display", { x, y: y + 1, z });
+              if (entity) {
+                entity.triggerEvent(`bey:var${key.displayItem}`);
+                entity.addTag(`${key.index}`);
+              }
 
-        const weaponKey = CHANGEABLE_WEAPONS.find((w) => playerHeld && playerHeld.typeId === w.typeId);
-        if (weaponKey && state === key.index) {
-          player.runCommand(`/replaceitem entity @s slot.weapon.mainhand 0 bey:${key.weapon}_${weaponKey.itemTag}`);
-          block.setPermutation(block.permutation.withState("bey:materia_conflux", 0));
-          block.dimension.runCommand(`/particle minecraft:totem_particle ${x} ${y + 1} ${z}`);
-          block.dimension.runCommand(
-            `/tag @e[type=bey:display_item_${key.displayItem}, x=${x},y=${y + 1},z=${z}] add gonnaDie`
-          );
-          Minecraft.world.playSound(`bey_place_sound`, block.location, { volume: 10, pitch: 0.3 });
+              player.runCommand(`/clear @s ${key.typeId} 0 1`);
+            }
+          }
+        });
 
-          for (const abilityKey of WEAPON_ABILITIES) {
-            if (abilityKey.weaponTag === key.weapon) {
-              if (randomIndex === abilityKey.abilityIndex) {
+        CHANGEABLE_WEAPONS.forEach((weapon) => {
+          if (playerHeld && playerHeld.typeId == weapon.typeId) {
+            let { x, y, z } = block.location;
+
+            let entitiesAbove = block.dimension.getEntities().filter((entity) => {
+              let pos = entity.location;
+              return Math.floor(pos.x) === x && Math.floor(pos.y) === y + 1 && Math.floor(pos.z) === z;
+            });
+
+            entitiesAbove.forEach((entity) => {
+              let index = entity.getTags()[0];
+              let currentLore = playerHeld.getLore();
+
+              let combinedWeapon = COMBINED_WEAPONS.find((weapon) => weapon.index === index);
+              if (!combinedWeapon) return;
+
+              let matchingAbilities = WEAPON_ABILITIES.filter((ability) => ability.weaponTag === combinedWeapon.weapon);
+              let hasMatchingLore = matchingAbilities.some((ability) => currentLore.includes(ability.abilityLore));
+
+              if (!hasMatchingLore) {
+                player.runCommand(
+                  `/replaceitem entity @s slot.weapon.mainhand 0 bey:${combinedWeapon.weapon}_${weapon.itemTag}`
+                );
+                block.dimension.runCommand(`/particle minecraft:totem_particle ${x} ${y + 1} ${z}`);
+                Minecraft.world.playSound(`bey_place_sound`, block.location, { volume: 10, pitch: 0.3 });
+                entitiesAbove.forEach((entity) => entity.addTag(`gonnaDie`));
+              }
+            });
+          }
+          COMBINED_WEAPONS.forEach((abilityWeapon) => {
+            let entitiesAbove = block.dimension.getEntities().filter((entity) => {
+              let pos = entity.location;
+              return Math.floor(pos.x) === x && Math.floor(pos.y) === y + 1 && Math.floor(pos.z) === z;
+            });
+
+            entitiesAbove.forEach((entity) => {
+              let index = entity.getTags()[0];
+              if (
+                playerHeld?.typeId.split(":")[1].split("_")[0] == abilityWeapon.weapon &&
+                index == abilityWeapon.index &&
+                playerHeld?.typeId.split(":")[0] == "bey"
+              ) {
+                let customTag = playerHeld.typeId.split(":")[1].split("_")[0];
                 const inventory = (player.getComponent("minecraft:inventory") as Minecraft.EntityInventoryComponent)
                   .container;
-                if (inventory == undefined) return;
                 const selectedSlotIndex = player.selectedSlotIndex;
+                if (inventory == undefined) return;
                 const item = inventory.getItem(selectedSlotIndex);
 
                 if (!item) {
-                  break;
+                  return;
                 }
-                Minecraft.system.runTimeout(() => {
-                  item.setLore([`${abilityKey.abilityLore}`]);
-                  inventory.setItem(selectedSlotIndex, item);
-                });
-                break;
+
+                let currentLore = item.getLore() || [];
+                const abilitiesForWeapon = WEAPON_ABILITIES.filter((a) => a.weaponTag === customTag);
+                const nextAbility = abilitiesForWeapon.find((ability) => !currentLore.includes(ability.abilityLore));
+
+                if (nextAbility) {
+                  Minecraft.system.runTimeout(() => {
+                    currentLore.push(nextAbility.abilityLore);
+                    item.setLore(currentLore);
+                    inventory.setItem(selectedSlotIndex, item);
+
+                    block.setPermutation(block.permutation.withState("bey:materia_conflux", 0));
+                    block.dimension.runCommand(`/particle minecraft:totem_particle ${x} ${y + 1} ${z}`);
+                    entity.addTag(`gonnaDie`);
+                    Minecraft.world.playSound(`bey_place_sound`, block.location, { volume: 10, pitch: 0.3 });
+                  });
+                } else {
+                }
               }
-            }
-          }
-        }
-
-        if (playerHeld && playerHeld.typeId.split(":")[1].split("_")[0] === key.weapon && state === key.index) {
-          const inventory = (player.getComponent("minecraft:inventory") as Minecraft.EntityInventoryComponent)
-            .container;
-          const selectedSlotIndex = player.selectedSlotIndex;
-          if (inventory == undefined) return;
-          const item = inventory.getItem(selectedSlotIndex);
-
-          if (!item) {
-            return;
-          }
-
-          let currentLore = item.getLore() || [];
-          if (currentLore.length >= 6) {
-            return;
-          }
-
-          const abilitiesForWeapon = WEAPON_ABILITIES.filter((a) => a.weaponTag === customTag);
-          const nextAbility = abilitiesForWeapon.find((ability) => !currentLore.includes(ability.abilityLore));
-
-          if (nextAbility) {
-            Minecraft.system.runTimeout(() => {
-              currentLore.push(nextAbility.abilityLore);
-              item.setLore(currentLore);
-              inventory.setItem(selectedSlotIndex, item);
-
-              block.setPermutation(block.permutation.withState("bey:materia_conflux", 0));
-              block.dimension.runCommand(`/particle minecraft:totem_particle ${x} ${y + 1} ${z}`);
-              block.dimension.runCommand(
-                `/tag @e[type=bey:display_item_${key.displayItem}, x=${x},y=${y + 1},z=${z}] add gonnaDie`
-              );
-              Minecraft.world.playSound(`bey_place_sound`, block.location, { volume: 10, pitch: 0.3 });
             });
-          }
-        }
-
-        if (playerHeld === undefined && state === key.index) {
-          block.setPermutation(block.permutation.withState("bey:materia_conflux", 0));
-          block.dimension.runCommand(
-            `/tag @e[type=bey:display_item_${key.displayItem}, x=${x},y=${y + 1},z=${z}] add gonnaDie`
-          );
-
-          Minecraft.system.runTimeout(() => {
-            player.dimension.runCommand(`/give @s ${key.typeId}`);
-          }, 2);
-        }
-      });
-    }
+          });
+        });
+      },
+    });
   });
 }

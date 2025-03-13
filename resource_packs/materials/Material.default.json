@@ -1,8 +1,0 @@
-{
-  "materials": {
-    "default": {
-      "textures": ["texture.sampler"],
-      "render_method": "opaque"
-    }
-  }
-}
