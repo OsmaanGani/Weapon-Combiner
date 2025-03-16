@@ -18,7 +18,9 @@
         "sea": "entity_alphatest",
         "tnt": "entity_alphatest",
         "totem": "entity_alphatest",
-        "wither_rose": "entity_alphatest"
+        "wither_rose": "entity_alphatest",
+        "raid_bottle": "entity_alphatest",
+        "blaze": "entity_alphatest"
       },
       "textures": {
         "default": "textures/entity/weapon_combiner_display_empty",
@@ -35,7 +37,9 @@
         "sea": "textures/items/heartofthesea_closed",
         "tnt": "textures/blocks/tnt_side",
         "totem": "textures/items/totem",
-        "wither_rose": "textures/blocks/flower_wither_rose"
+        "wither_rose": "textures/blocks/flower_wither_rose",
+        "raid_bottle": "textures/items/ominous_bottle",
+        "blaze": "textures/items/blaze_powder"
       },
       "geometry": {
         "default": "geometry.weapon_combiner_display",
@@ -52,7 +56,9 @@
         "sea": "geometry.weapon_combiner_displaySea",
         "tnt": "geometry.weapon_combiner_block_display",
         "totem": "geometry.weapon_combiner_displayTot",
-        "wither_rose": "geometry.weapon_combiner_displayWit"
+        "wither_rose": "geometry.weapon_combiner_displayWit",
+        "raid_bottle": "geometry.weapon_combiner_displayRai",
+        "blaze": "geometry.weapon_combiner_displayBla"
       },
       "animations": {
         "rotate": "animation.weapon_combiner_display.rotate"

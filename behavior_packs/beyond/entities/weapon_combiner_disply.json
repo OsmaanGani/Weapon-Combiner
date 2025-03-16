@@ -7,6 +7,11 @@
       "is_summonable": true
     },
     "component_groups": {
+      "bey:variantBla": {
+        "minecraft:variant": {
+          "value": 16
+        }
+      },
       "bey:variantNull": {
         "minecraft:variant": {
           "value": 0
@@ -81,6 +86,11 @@
         "minecraft:variant": {
           "value": 14
         }
+      },
+      "bey:variantRai": {
+        "minecraft:variant": {
+          "value": 15
+        }
       }
     },
     "components": {
@@ -98,6 +108,16 @@
       }
     },
     "events": {
+      "bey:varBla": {
+        "add": {
+          "component_groups": ["bey:variantBla"]
+        }
+      },
+      "bey:varRai": {
+        "add": {
+          "component_groups": ["bey:variantRai"]
+        }
+      },
       "bey:varNull": {
         "add": {
           "component_groups": ["bey:variantNull"]

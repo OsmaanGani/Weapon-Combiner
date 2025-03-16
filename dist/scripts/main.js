@@ -89,7 +89,9 @@ function weapon_combiner() {
     { typeId: "minecraft:heart_of_the_sea", weapon: "sea", displayItem: "Sea", index: "11" },
     { typeId: "minecraft:tnt", weapon: "tnt", displayItem: "Tnt", index: "12" },
     { typeId: "minecraft:totem_of_undying", weapon: "totem", displayItem: "Tot", index: "13" },
-    { typeId: "minecraft:wither_rose", weapon: "wither", displayItem: "Wit", index: "14" }
+    { typeId: "minecraft:wither_rose", weapon: "wither", displayItem: "Wit", index: "14" },
+    { typeId: "minecraft:ominous_bottle", weapon: "raid", displayItem: "Rai", index: "15" },
+    { typeId: "minecraft:blaze_powder", weapon: "blaze", displayItem: "Bla", index: "16" }
   ];
   const CHANGEABLE_WEAPONS = [
     { typeId: "minecraft:iron_sword", itemTag: "is" },
