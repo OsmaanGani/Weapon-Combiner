@@ -70,7 +70,12 @@ var WEAPON_ABILITIES = [
   { weaponTag: "wither", abilityLore: "\xA7r\xA7d[Passive] WITHER Resistance When Holding", abilityIndex: 0 },
   { weaponTag: "wither", abilityLore: "\xA7r\xA7d[Active] WITHER mobs around you", abilityIndex: 1 },
   { weaponTag: "wither", abilityLore: "\xA7r\xA7d[On-Hit] Inflict WITHER Effect", abilityIndex: 2 },
-  { weaponTag: "wither", abilityLore: "\xA7r\xA7d[On-Hurt] Summon AoE WITHER", abilityIndex: 3 }
+  { weaponTag: "wither", abilityLore: "\xA7r\xA7d[On-Hurt] Summon AoE WITHER", abilityIndex: 3 },
+  // WITHER
+  { weaponTag: "blaze", abilityLore: "\xA7r\xA7d[Passive] SPEED buff When Holding", abilityIndex: 0 },
+  { weaponTag: "blaze", abilityLore: "\xA7r\xA7d[Active] DASH and set mobs on fire around you", abilityIndex: 1 },
+  { weaponTag: "blaze", abilityLore: "\xA7r\xA7d[On-Hit] 40% Chance to burn the enemy", abilityIndex: 2 },
+  { weaponTag: "blaze", abilityLore: "\xA7r\xA7d[On-Hurt] 80% Chace to burn the attacker", abilityIndex: 3 }
 ];
 function weapon_combiner() {
   const COMBINED_WEAPONS = [
@@ -163,6 +168,8 @@ function weapon_combiner() {
         CHANGEABLE_WEAPONS.forEach((weapon) => {
           if (playerHeld && playerHeld.typeId == weapon.typeId) {
             let { x: x2, y: y2, z: z2 } = block.location;
+            let randomIndex = Math.floor(Math.random() * COMBINED_WEAPONS.length);
+            Minecraft.world.sendMessage(`${randomIndex}`);
             let entitiesAbove = block.dimension.getEntities().filter((entity) => {
               let pos = entity.location;
               return Math.floor(pos.x) === x2 && Math.floor(pos.y) === y2 + 1 && Math.floor(pos.z) === z2;
@@ -170,18 +177,32 @@ function weapon_combiner() {
             entitiesAbove.forEach((entity) => {
               let index = entity.getTags()[0];
               let currentLore = playerHeld.getLore();
-              let combinedWeapon = COMBINED_WEAPONS.find((weapon2) => weapon2.index === index);
+              let combinedWeapon = COMBINED_WEAPONS.find((w) => w.index == index);
               if (!combinedWeapon)
                 return;
-              let matchingAbilities = WEAPON_ABILITIES.filter((ability) => ability.weaponTag === combinedWeapon.weapon);
-              let hasMatchingLore = matchingAbilities.some((ability) => currentLore.includes(ability.abilityLore));
+              let matchingAbilities = WEAPON_ABILITIES.filter((a) => a.weaponTag === combinedWeapon.weapon);
+              let hasMatchingLore = matchingAbilities.some((a) => currentLore.includes(a.abilityLore));
               if (!hasMatchingLore) {
                 player.runCommand(
                   `/replaceitem entity @s slot.weapon.mainhand 0 bey:${combinedWeapon.weapon}_${weapon.itemTag}`
                 );
                 block.dimension.runCommand(`/particle minecraft:totem_particle ${x2} ${y2 + 1} ${z2}`);
                 Minecraft.world.playSound(`bey_place_sound`, block.location, { volume: 10, pitch: 0.3 });
-                entitiesAbove.forEach((entity2) => entity2.addTag(`gonnaDie`));
+                entitiesAbove.forEach((e) => e.addTag(`gonnaDie`));
+                if (matchingAbilities.length > 0) {
+                  let randomAbility = matchingAbilities[Math.floor(Math.random() * matchingAbilities.length)];
+                  const inventory = player.getComponent("minecraft:inventory").container;
+                  const selectedSlotIndex = player.selectedSlotIndex;
+                  if (!inventory)
+                    return;
+                  const item = inventory.getItem(selectedSlotIndex);
+                  if (!item)
+                    return;
+                  Minecraft.system.runTimeout(() => {
+                    item.setLore([randomAbility.abilityLore]);
+                    inventory.setItem(selectedSlotIndex, item);
+                  });
+                }
               }
             });
           }
@@ -196,18 +217,20 @@ function weapon_combiner() {
                 let customTag = playerHeld.typeId.split(":")[1].split("_")[0];
                 const inventory = player.getComponent("minecraft:inventory").container;
                 const selectedSlotIndex = player.selectedSlotIndex;
-                if (inventory == void 0)
+                if (!inventory)
                   return;
                 const item = inventory.getItem(selectedSlotIndex);
-                if (!item) {
+                if (!item)
                   return;
-                }
                 let currentLore = item.getLore() || [];
                 const abilitiesForWeapon = WEAPON_ABILITIES.filter((a) => a.weaponTag === customTag);
-                const nextAbility = abilitiesForWeapon.find((ability) => !currentLore.includes(ability.abilityLore));
-                if (nextAbility) {
+                const availableAbilities = abilitiesForWeapon.filter(
+                  (ability) => !currentLore.includes(ability.abilityLore)
+                );
+                if (availableAbilities.length > 0) {
+                  let randomAbility = availableAbilities[Math.floor(Math.random() * availableAbilities.length)];
                   Minecraft.system.runTimeout(() => {
-                    currentLore.push(nextAbility.abilityLore);
+                    currentLore.push(randomAbility.abilityLore);
                     item.setLore(currentLore);
                     inventory.setItem(selectedSlotIndex, item);
                     block.setPermutation(block.permutation.withState("bey:materia_conflux", 0));
@@ -215,7 +238,6 @@ function weapon_combiner() {
                     entity.addTag(`gonnaDie`);
                     Minecraft.world.playSound(`bey_place_sound`, block.location, { volume: 10, pitch: 0.3 });
                   });
-                } else {
                 }
               }
             });
@@ -331,6 +353,9 @@ function weapon_passive() {
             if (passiveCooldown == 1) {
               player.runCommand(`/effect @s wither 0 0 true`);
             }
+            break;
+          case (currentLore && currentLore.some((line) => line === "\xA7r\xA7d[Passive] SPEED buff When Holding")):
+            player.addEffect(`speed`, 20, { amplifier: 2 });
             break;
         }
       }
@@ -515,6 +540,13 @@ function weapon_onhit() {
           break;
         case (currentLore && currentLore.some((line) => line === "\xA7r\xA7d[On-Hit] Inflict WITHER Effect")):
           hurtEntity.addEffect(`wither`, 60, { amplifier: 0 });
+          player.setDynamicProperty(`on_hit_cooldown`, onHitCooldown + 1);
+          break;
+        case (currentLore && currentLore.some((line) => line === "\xA7r\xA7d[On-Hurt] 80% Chace to burn the attacker")):
+          let randomX = Math.random();
+          if (randomX <= 0.8) {
+            hurtEntity.setOnFire(5);
+          }
           player.setDynamicProperty(`on_hit_cooldown`, onHitCooldown + 1);
           break;
       }
@@ -729,6 +761,18 @@ function weapon_active() {
             player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
           });
           break;
+        case currentLore.some((line) => line === "\xA7r\xA7d[Active] DASH and set mobs on fire around you"):
+          player.applyKnockback(x, z, 5, 0);
+          Minecraft4.system.runTimeout(() => {
+            player.dimension.getEntities({ maxDistance: 5, location: player.location }).forEach((entity) => {
+              player.dimension.spawnEntity("bey:radius_entity", player.location);
+              if (entity.nameTag !== player.nameTag && entity.typeId !== "minecraft:wolf" && entity.typeId !== "minecraft:cat") {
+                entity.setOnFire(2);
+              }
+              player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
+            });
+          }, 5);
+          break;
       }
     }
   });
@@ -860,6 +904,13 @@ function weapon_onhurt() {
           }
         });
         player.setDynamicProperty("on_hurt_cooldown", 1);
+        break;
+      case (currentLore.some((line) => line === "\xA7r\xA7d[On-Hurt] 40% Chace to burn the attacker") && onHurtCooldown === 0):
+        let randomX = Math.random();
+        if (randomX <= 0.4) {
+          hurtingEntity.setOnFire(5);
+          player.setDynamicProperty("on_hurt_cooldown", 1);
+        }
         break;
     }
   });

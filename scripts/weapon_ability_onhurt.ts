@@ -164,6 +164,15 @@ export function weapon_onhurt() {
 
         player.setDynamicProperty("on_hurt_cooldown", 1);
         break;
+
+      case currentLore.some((line: string) => line === "§r§d[On-Hurt] 40% Chace to burn the attacker") &&
+        onHurtCooldown === 0:
+        let randomX = Math.random();
+        if (randomX <= 0.4) {
+          hurtingEntity.setOnFire(5);
+          player.setDynamicProperty("on_hurt_cooldown", 1);
+        }
+        break;
     }
   });
 

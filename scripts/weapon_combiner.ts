@@ -84,6 +84,12 @@ export const WEAPON_ABILITIES = [
   { weaponTag: "wither", abilityLore: "§r§d[Active] WITHER mobs around you", abilityIndex: 1 },
   { weaponTag: "wither", abilityLore: "§r§d[On-Hit] Inflict WITHER Effect", abilityIndex: 2 },
   { weaponTag: "wither", abilityLore: "§r§d[On-Hurt] Summon AoE WITHER", abilityIndex: 3 },
+
+  // WITHER
+  { weaponTag: "blaze", abilityLore: "§r§d[Passive] SPEED buff When Holding", abilityIndex: 0 },
+  { weaponTag: "blaze", abilityLore: "§r§d[Active] DASH and set mobs on fire around you", abilityIndex: 1 },
+  { weaponTag: "blaze", abilityLore: "§r§d[On-Hit] 40% Chance to burn the enemy", abilityIndex: 2 },
+  { weaponTag: "blaze", abilityLore: "§r§d[On-Hurt] 80% Chace to burn the attacker", abilityIndex: 3 },
 ];
 
 export function weapon_combiner() {
@@ -186,6 +192,9 @@ export function weapon_combiner() {
           if (playerHeld && playerHeld.typeId == weapon.typeId) {
             let { x, y, z } = block.location;
 
+            let randomIndex = Math.floor(Math.random() * COMBINED_WEAPONS.length);
+            Minecraft.world.sendMessage(`${randomIndex}`);
+
             let entitiesAbove = block.dimension.getEntities().filter((entity) => {
               let pos = entity.location;
               return Math.floor(pos.x) === x && Math.floor(pos.y) === y + 1 && Math.floor(pos.z) === z;
@@ -195,11 +204,11 @@ export function weapon_combiner() {
               let index = entity.getTags()[0];
               let currentLore = playerHeld.getLore();
 
-              let combinedWeapon = COMBINED_WEAPONS.find((weapon) => weapon.index === index);
+              let combinedWeapon = COMBINED_WEAPONS.find((w) => w.index == index);
               if (!combinedWeapon) return;
 
-              let matchingAbilities = WEAPON_ABILITIES.filter((ability) => ability.weaponTag === combinedWeapon.weapon);
-              let hasMatchingLore = matchingAbilities.some((ability) => currentLore.includes(ability.abilityLore));
+              let matchingAbilities = WEAPON_ABILITIES.filter((a) => a.weaponTag === combinedWeapon.weapon);
+              let hasMatchingLore = matchingAbilities.some((a) => currentLore.includes(a.abilityLore));
 
               if (!hasMatchingLore) {
                 player.runCommand(
@@ -207,10 +216,28 @@ export function weapon_combiner() {
                 );
                 block.dimension.runCommand(`/particle minecraft:totem_particle ${x} ${y + 1} ${z}`);
                 Minecraft.world.playSound(`bey_place_sound`, block.location, { volume: 10, pitch: 0.3 });
-                entitiesAbove.forEach((entity) => entity.addTag(`gonnaDie`));
+                entitiesAbove.forEach((e) => e.addTag(`gonnaDie`));
+
+                if (matchingAbilities.length > 0) {
+                  let randomAbility = matchingAbilities[Math.floor(Math.random() * matchingAbilities.length)];
+
+                  const inventory = (player.getComponent("minecraft:inventory") as Minecraft.EntityInventoryComponent)
+                    .container;
+                  const selectedSlotIndex = player.selectedSlotIndex;
+                  if (!inventory) return;
+                  const item = inventory.getItem(selectedSlotIndex);
+
+                  if (!item) return;
+
+                  Minecraft.system.runTimeout(() => {
+                    item.setLore([randomAbility.abilityLore]); // ✅ Directly assigning a random ability
+                    inventory.setItem(selectedSlotIndex, item);
+                  });
+                }
               }
             });
           }
+
           COMBINED_WEAPONS.forEach((abilityWeapon) => {
             let entitiesAbove = block.dimension.getEntities().filter((entity) => {
               let pos = entity.location;
@@ -225,23 +252,30 @@ export function weapon_combiner() {
                 playerHeld?.typeId.split(":")[0] == "bey"
               ) {
                 let customTag = playerHeld.typeId.split(":")[1].split("_")[0];
+
                 const inventory = (player.getComponent("minecraft:inventory") as Minecraft.EntityInventoryComponent)
                   .container;
                 const selectedSlotIndex = player.selectedSlotIndex;
-                if (inventory == undefined) return;
+                if (!inventory) return;
                 const item = inventory.getItem(selectedSlotIndex);
-
-                if (!item) {
-                  return;
-                }
+                if (!item) return;
 
                 let currentLore = item.getLore() || [];
-                const abilitiesForWeapon = WEAPON_ABILITIES.filter((a) => a.weaponTag === customTag);
-                const nextAbility = abilitiesForWeapon.find((ability) => !currentLore.includes(ability.abilityLore));
 
-                if (nextAbility) {
+                // ✅ Get all available abilities for this weapon
+                const abilitiesForWeapon = WEAPON_ABILITIES.filter((a) => a.weaponTag === customTag);
+
+                // ✅ Filter out already applied abilities
+                const availableAbilities = abilitiesForWeapon.filter(
+                  (ability) => !currentLore.includes(ability.abilityLore)
+                );
+
+                // ✅ Randomly select an ability if there are any available
+                if (availableAbilities.length > 0) {
+                  let randomAbility = availableAbilities[Math.floor(Math.random() * availableAbilities.length)];
+
                   Minecraft.system.runTimeout(() => {
-                    currentLore.push(nextAbility.abilityLore);
+                    currentLore.push(randomAbility.abilityLore);
                     item.setLore(currentLore);
                     inventory.setItem(selectedSlotIndex, item);
 
@@ -250,7 +284,6 @@ export function weapon_combiner() {
                     entity.addTag(`gonnaDie`);
                     Minecraft.world.playSound(`bey_place_sound`, block.location, { volume: 10, pitch: 0.3 });
                   });
-                } else {
                 }
               }
             });

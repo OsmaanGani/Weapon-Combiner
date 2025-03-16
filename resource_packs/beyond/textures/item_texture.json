@@ -536,50 +536,44 @@
     "bey_ame_template": {
       "textures": "textures/items/ame_template"
     },
-    "bey_beacon_template": {
-      "textures": "textures/items/beacon_template"
+    "bey_blaze_ds": {
+      "textures": "textures/items/blaze_ds"
     },
-    "bey_camafloug_template": {
-      "textures": "textures/items/cama_template"
+    "bey_blaze_is": {
+      "textures": "textures/items/blaze_is"
     },
-    "bey_crying_template": {
-      "textures": "textures/items/cryingobsidian_template"
+    "bey_blaze_ns": {
+      "textures": "textures/items/blaze_ns"
     },
-    "bey_deepdark_template": {
-      "textures": "textures/items/deepdark_template"
+
+    "bey_blaze_da": {
+      "textures": "textures/items/blaze_da"
     },
-    "bey_ender_dragon_template": {
-      "textures": "textures/items/enderdragon_template"
+    "bey_blaze_ia": {
+      "textures": "textures/items/blaze_ia"
     },
-    "bey_ender_pearl_template": {
-      "textures": "textures/items/enderpearl_template"
+    "bey_blaze_na": {
+      "textures": "textures/items/blaze_na"
     },
-    "bey_frog_template": {
-      "textures": "textures/items/frog_template"
+
+    "bey_blaze_dsc": {
+      "textures": "textures/items/blaze_dsc"
     },
-    "bey_god_template": {
-      "textures": "textures/items/god_template"
+    "bey_blaze_isc": {
+      "textures": "textures/items/blaze_isc"
     },
-    "bey_magma_template": {
-      "textures": "textures/items/magma_template"
+    "bey_blaze_nsc": {
+      "textures": "textures/items/blaze_nsc"
     },
-    "bey_redstone_template": {
-      "textures": "textures/items/redstone_template"
+
+    "bey_blaze_dh": {
+      "textures": "textures/items/blaze_dh"
     },
-    "bey_tnt_template": {
-      "textures": "textures/items/tnt_template"
+    "bey_blaze_ih": {
+      "textures": "textures/items/blaze_ih"
     },
-    "bey_totem_template": {
-      "textures": "textures/items/totem_template"
-    },
-    "bey_wither_template": {
-      "textures": "textures/items/wither_template"
-    },
-    "bey_rabbit_template": {
-      "textures": "textures/items/rabbit_template"
-    },
-    "bey_combo_crafter": {
-      "textures": "textures/entity/combo_crafter_egg"
+    "bey_blaze_nh": {
+      "textures": "textures/items/blaze_nh"
     }
   }
 }

@@ -110,6 +110,10 @@ export function weapon_passive() {
               player.runCommand(`/effect @s wither 0 0 true`);
             }
             break;
+
+          case currentLore && currentLore.some((line: string) => line === "§r§d[Passive] SPEED buff When Holding"):
+            player.addEffect(`speed`, 20, { amplifier: 2 });
+            break;
         }
       }
       if (typeof passiveCooldown == `number` && typeof passiveSpeed == `number` && typeof passivekncok == `number`) {
