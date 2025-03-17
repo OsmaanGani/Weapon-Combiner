@@ -173,6 +173,12 @@ export function weapon_onhurt() {
           player.setDynamicProperty("on_hurt_cooldown", 1);
         }
         break;
+
+      case currentLore.some((line: string) => line === "§r§d[On-Hurt] Curse The Attacker") && onHurtCooldown === 0:
+        hurtingEntity.addTag(`Cursed`);
+        hurtingEntity.setDynamicProperty(`Cursed`, 1);
+        player.setDynamicProperty("on_hurt_cooldown", 1);
+        break;
     }
   });
 

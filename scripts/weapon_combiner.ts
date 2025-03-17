@@ -85,11 +85,17 @@ export const WEAPON_ABILITIES = [
   { weaponTag: "wither", abilityLore: "§r§d[On-Hit] Inflict WITHER Effect", abilityIndex: 2 },
   { weaponTag: "wither", abilityLore: "§r§d[On-Hurt] Summon AoE WITHER", abilityIndex: 3 },
 
-  // WITHER
+  // BLAZE
   { weaponTag: "blaze", abilityLore: "§r§d[Passive] SPEED buff When Holding", abilityIndex: 0 },
   { weaponTag: "blaze", abilityLore: "§r§d[Active] DASH and set mobs on fire around you", abilityIndex: 1 },
   { weaponTag: "blaze", abilityLore: "§r§d[On-Hit] 40% Chance to burn the enemy", abilityIndex: 2 },
   { weaponTag: "blaze", abilityLore: "§r§d[On-Hurt] 80% Chace to burn the attacker", abilityIndex: 3 },
+
+  // RAID
+  { weaponTag: "raid", abilityLore: "§r§d[Passive] Extra Damage To Illager Type Mobs", abilityIndex: 0 },
+  { weaponTag: "raid", abilityLore: "§r§d[Active] Curse Entities Around", abilityIndex: 1 },
+  { weaponTag: "raid", abilityLore: "§r§d[On-Hit] Curse The Enemy", abilityIndex: 2 },
+  { weaponTag: "raid", abilityLore: "§r§d[On-Hurt] Curse The Attacker", abilityIndex: 3 },
 ];
 
 export function weapon_combiner() {

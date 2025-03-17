@@ -574,6 +574,26 @@
     },
     "bey_blaze_nh": {
       "textures": "textures/items/blaze_nh"
+    },
+
+    "bey_raid_ds": {
+      "textures": "textures/items/raid_ds"
+    },
+    "bey_raid_is": {
+      "textures": "textures/items/raid_is"
+    },
+    "bey_raid_ns": {
+      "textures": "textures/items/raid_ns"
+    },
+
+    "bey_raid_da": {
+      "textures": "textures/items/raid_da"
+    },
+    "bey_raid_ia": {
+      "textures": "textures/items/raid_ia"
+    },
+    "bey_raid_na": {
+      "textures": "textures/items/raid_na"
     }
   }
 }

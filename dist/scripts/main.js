@@ -71,11 +71,16 @@ var WEAPON_ABILITIES = [
   { weaponTag: "wither", abilityLore: "\xA7r\xA7d[Active] WITHER mobs around you", abilityIndex: 1 },
   { weaponTag: "wither", abilityLore: "\xA7r\xA7d[On-Hit] Inflict WITHER Effect", abilityIndex: 2 },
   { weaponTag: "wither", abilityLore: "\xA7r\xA7d[On-Hurt] Summon AoE WITHER", abilityIndex: 3 },
-  // WITHER
+  // BLAZE
   { weaponTag: "blaze", abilityLore: "\xA7r\xA7d[Passive] SPEED buff When Holding", abilityIndex: 0 },
   { weaponTag: "blaze", abilityLore: "\xA7r\xA7d[Active] DASH and set mobs on fire around you", abilityIndex: 1 },
   { weaponTag: "blaze", abilityLore: "\xA7r\xA7d[On-Hit] 40% Chance to burn the enemy", abilityIndex: 2 },
-  { weaponTag: "blaze", abilityLore: "\xA7r\xA7d[On-Hurt] 80% Chace to burn the attacker", abilityIndex: 3 }
+  { weaponTag: "blaze", abilityLore: "\xA7r\xA7d[On-Hurt] 80% Chace to burn the attacker", abilityIndex: 3 },
+  // RAID
+  { weaponTag: "raid", abilityLore: "\xA7r\xA7d[Passive] Extra Damage To Illager Type Mobs", abilityIndex: 0 },
+  { weaponTag: "raid", abilityLore: "\xA7r\xA7d[Active] Curse Entities Around", abilityIndex: 1 },
+  { weaponTag: "raid", abilityLore: "\xA7r\xA7d[On-Hit] Curse The Enemy", abilityIndex: 2 },
+  { weaponTag: "raid", abilityLore: "\xA7r\xA7d[On-Hurt] Curse The Attacker", abilityIndex: 3 }
 ];
 function weapon_combiner() {
   const COMBINED_WEAPONS = [
@@ -398,8 +403,36 @@ function weapon_passive() {
         if (playerHeld && speedkncok == 0) {
           player.setDynamicProperty(`passive_ability_speed`, speedkncok + 1);
           player.addEffect(`speed`, 40, { amplifier: 3 });
-          break;
         }
+        break;
+    }
+  });
+  Minecraft2.world.afterEvents.entityHitEntity.subscribe((event) => {
+    let player = event.damagingEntity;
+    if (player.typeId != "minecraft:player")
+      return;
+    let hurtEntity = event.hitEntity;
+    let playerHeld = player.getComponent(`equippable`).getEquipment(
+      Minecraft2.EquipmentSlot.Mainhand
+    );
+    if (playerHeld == void 0)
+      return;
+    let currentLore = playerHeld.getLore();
+    if (player.typeId != "minecraft:player")
+      return;
+    switch (true) {
+      case (currentLore && currentLore.some((line) => line === "\xA7r\xA7d[Passive] Extra Damage To Illager Type Mobs")):
+        const ILLAGER_MOBS = [
+          "minecraft:pillager",
+          "minecraft:evocation_illager",
+          "minecraft:vindicator",
+          "minecraft:ravager",
+          "minecraft:witch"
+        ];
+        if (hurtEntity && ILLAGER_MOBS.includes(hurtEntity.typeId)) {
+          hurtEntity.applyDamage(6, { cause: Minecraft2.EntityDamageCause.suicide });
+        }
+        break;
     }
   });
   Minecraft2.system.afterEvents.scriptEventReceive.subscribe(({ id, sourceEntity: player }) => {
@@ -458,6 +491,22 @@ function weapon_onhit() {
       if (onHitCooldown > 60) {
         player.setDynamicProperty(`on_hit_cooldown`, 0);
       }
+      player.dimension.getEntities().forEach((entity) => {
+        let curseMeter = entity.getDynamicProperty(`Cursed`) || 0;
+        if (typeof curseMeter != `number`)
+          return;
+        if (entity.hasTag(`Cursed`)) {
+          if (curseMeter > 0)
+            entity.setDynamicProperty(`Cursed`, curseMeter + 1);
+          if (curseMeter % 3 == 1) {
+            entity.dimension.spawnParticle("bey:raid_curse", entity.location);
+          }
+          if (curseMeter > 60) {
+            entity.setDynamicProperty(`Cursed`, 0);
+            entity.applyDamage(10, { cause: Minecraft3.EntityDamageCause.suicide });
+          }
+        }
+      });
     });
   });
   Minecraft3.world.afterEvents.entityHitEntity.subscribe((event) => {
@@ -547,6 +596,11 @@ function weapon_onhit() {
           if (randomX <= 0.8) {
             hurtEntity.setOnFire(5);
           }
+          player.setDynamicProperty(`on_hit_cooldown`, onHitCooldown + 1);
+          break;
+        case (currentLore && currentLore.some((line) => line === "\xA7r\xA7d[On-Hit] Curse The Enemy")):
+          hurtEntity.addTag(`Cursed`);
+          hurtEntity.setDynamicProperty(`Cursed`, 1);
           player.setDynamicProperty(`on_hit_cooldown`, onHitCooldown + 1);
           break;
       }
@@ -773,6 +827,16 @@ function weapon_active() {
             });
           }, 5);
           break;
+        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Curse Entities Around"):
+          player.dimension.getEntities({ maxDistance: 5, location: player.location }).forEach((entity) => {
+            player.dimension.spawnEntity("bey:radius_entity", player.location);
+            if (entity.nameTag !== player.nameTag && entity.typeId !== "minecraft:wolf" && entity.typeId !== "minecraft:cat") {
+              entity.addTag(`Cursed`);
+              entity.setDynamicProperty(`Cursed`, 1);
+            }
+            player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
+          });
+          break;
       }
     }
   });
@@ -911,6 +975,11 @@ function weapon_onhurt() {
           hurtingEntity.setOnFire(5);
           player.setDynamicProperty("on_hurt_cooldown", 1);
         }
+        break;
+      case (currentLore.some((line) => line === "\xA7r\xA7d[On-Hurt] Curse The Attacker") && onHurtCooldown === 0):
+        hurtingEntity.addTag(`Cursed`);
+        hurtingEntity.setDynamicProperty(`Cursed`, 1);
+        player.setDynamicProperty("on_hurt_cooldown", 1);
         break;
     }
   });

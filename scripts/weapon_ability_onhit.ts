@@ -14,6 +14,21 @@ export function weapon_onhit() {
       if (onHitCooldown > 60) {
         player.setDynamicProperty(`on_hit_cooldown`, 0);
       }
+
+      player.dimension.getEntities().forEach((entity) => {
+        let curseMeter = entity.getDynamicProperty(`Cursed`) || 0;
+        if (typeof curseMeter != `number`) return;
+        if (entity.hasTag(`Cursed`)) {
+          if (curseMeter > 0) entity.setDynamicProperty(`Cursed`, curseMeter + 1);
+          if (curseMeter % 3 == 1) {
+            entity.dimension.spawnParticle("bey:raid_curse", entity.location);
+          }
+          if (curseMeter > 60) {
+            entity.setDynamicProperty(`Cursed`, 0);
+            entity.applyDamage(10, { cause: Minecraft.EntityDamageCause.suicide });
+          }
+        }
+      });
     });
   });
 
@@ -105,6 +120,11 @@ export function weapon_onhit() {
           if (randomX <= 0.8) {
             hurtEntity.setOnFire(5);
           }
+          player.setDynamicProperty(`on_hit_cooldown`, onHitCooldown + 1);
+          break;
+        case currentLore && currentLore.some((line: string) => line === "§r§d[On-Hit] Curse The Enemy"):
+          hurtEntity.addTag(`Cursed`);
+          hurtEntity.setDynamicProperty(`Cursed`, 1);
           player.setDynamicProperty(`on_hit_cooldown`, onHitCooldown + 1);
           break;
       }
