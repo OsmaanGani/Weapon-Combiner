@@ -315,7 +315,7 @@
       "textures": "textures/items/wither_iron_scythe_def"
     },
     "bey_god_nsc": {
-      "textures": "textures/items/godapple_netherite_scythe_def (3)"
+      "textures": "textures/items/godapple_netherite_scythe_def"
     },
     "bey_magma_nsc": {
       "textures": "textures/items/magma_netherite_scythe_def"
@@ -489,13 +489,13 @@
       "textures": "textures/items/Froglight_netherite_sword"
     },
     "bey_sea_da": {
-      "textures": "textures/items/Sea_diamond_axe,png"
+      "textures": "textures/items/sea_diamond_axe"
     },
     "bey_sea_ia": {
-      "textures": "textures/items/Sea_iron_axe,png"
+      "textures": "textures/items/sea_iron_axe"
     },
     "bey_sea_na": {
-      "textures": "textures/items/Sea_netherite_axe,png"
+      "textures": "textures/items/sea_netherite_axe"
     },
     "bey_tnt_da": {
       "textures": "textures/items/TnT_diamond_sword"
@@ -532,9 +532,6 @@
     },
     "bey_godaxe_na": {
       "textures": "textures/items/god_double_netherite_axe"
-    },
-    "bey_ame_template": {
-      "textures": "textures/items/ame_template"
     },
     "bey_blaze_ds": {
       "textures": "textures/items/blaze_ds"

@@ -100,24 +100,132 @@ export const WEAPON_ABILITIES = [
 
 export function weapon_combiner() {
   const COMBINED_WEAPONS = [
-    { typeId: "minecraft:amethyst_shard", weapon: "amy", displayItem: "Ame", index: "1" },
-    { typeId: "minecraft:nether_star", weapon: "bea", displayItem: "Net", index: "2" },
-    { typeId: "minecraft:oak_leaves", weapon: "cam", displayItem: "Oak", index: "3" },
-    { typeId: "minecraft:crying_obsidian", weapon: "cry", displayItem: "Cry", index: "4" },
-    { typeId: "minecraft:echo_shard", weapon: "deep", displayItem: "Ech", index: "5" },
-    { typeId: "minecraft:ochre_froglight", weapon: "froglight", displayItem: "Frg", index: "6" },
-    { typeId: "minecraft:pearlescent_froglight", weapon: "froglight", displayItem: "Frg", index: "6" },
-    { typeId: "minecraft:verdant_froglight", weapon: "froglight", displayItem: "Frg", index: "6" },
-    { typeId: "minecraft:enchanted_golden_apple", weapon: "god", displayItem: "Ega", index: "7" },
-    { typeId: "minecraft:magma", weapon: "magma", displayItem: "Mag", index: "8" },
-    { typeId: "minecraft:rabbit_foot", weapon: "rabbit", displayItem: "Rab", index: "9" },
-    { typeId: "minecraft:redstone", weapon: "redstone", displayItem: "Red", index: "10" },
-    { typeId: "minecraft:heart_of_the_sea", weapon: "sea", displayItem: "Sea", index: "11" },
-    { typeId: "minecraft:tnt", weapon: "tnt", displayItem: "Tnt", index: "12" },
-    { typeId: "minecraft:totem_of_undying", weapon: "totem", displayItem: "Tot", index: "13" },
-    { typeId: "minecraft:wither_rose", weapon: "wither", displayItem: "Wit", index: "14" },
-    { typeId: "minecraft:ominous_bottle", weapon: "raid", displayItem: "Rai", index: "15" },
-    { typeId: "minecraft:blaze_powder", weapon: "blaze", displayItem: "Bla", index: "16" },
+    {
+      typeId: "minecraft:amethyst_shard",
+      weapon: "amy",
+      displayItem: "Ame",
+      index: "1",
+      addable: "Sword, Axe, Hammer, Scythe, Mace[Addons]",
+    },
+    {
+      typeId: "minecraft:nether_star",
+      weapon: "bea",
+      displayItem: "Net",
+      index: "2",
+      addable: "Sword, Axe, Hammer, Scythe, Mace[Addons]",
+    },
+    {
+      typeId: "minecraft:oak_leaves",
+      weapon: "cam",
+      displayItem: "Oak",
+      index: "3",
+      addable: "Sword",
+    },
+    {
+      typeId: "minecraft:crying_obsidian",
+      weapon: "cry",
+      displayItem: "Cry",
+      index: "4",
+      addable: "Sword, Axe, Hammer, Mace[Addons]",
+    },
+    {
+      typeId: "minecraft:echo_shard",
+      weapon: "deep",
+      displayItem: "Ech",
+      index: "5",
+      addable: "Sword, Axe, Hammer, Mace[Addons]",
+    },
+    {
+      typeId: "minecraft:ochre_froglight",
+      weapon: "froglight",
+      displayItem: "Frg",
+      index: "6",
+      addable: "Sword",
+    },
+    {
+      typeId: "minecraft:pearlescent_froglight",
+      weapon: "froglight",
+      displayItem: "Frg",
+      index: "6",
+      addable: "Sword, Axe, Hammer, Mace[Addons]",
+    },
+    {
+      typeId: "minecraft:verdant_froglight",
+      weapon: "froglight",
+      displayItem: "Frg",
+      index: "6",
+      addable: "Sword",
+    },
+    {
+      typeId: "minecraft:enchanted_golden_apple",
+      weapon: "god",
+      displayItem: "Ega",
+      index: "7",
+      addable: "Sword, Axe, Scythe, Hammer",
+    },
+    {
+      typeId: "minecraft:magma",
+      weapon: "magma",
+      displayItem: "Mag",
+      index: "8",
+      addable: "Sword, Axe, Scythe, Hammer, Mace[Addons]",
+    },
+    {
+      typeId: "minecraft:rabbit_foot",
+      weapon: "rabbit",
+      displayItem: "Rab",
+      index: "9",
+      addable: "Sword, Axe, Scythe",
+    },
+    {
+      typeId: "minecraft:redstone",
+      weapon: "redstone",
+      displayItem: "Red",
+      index: "10",
+      addable: "Sword, Axe, Hammer, Mace[Addons]",
+    },
+    {
+      typeId: "minecraft:heart_of_the_sea",
+      weapon: "sea",
+      displayItem: "Sea",
+      index: "11",
+      addable: "Axe",
+    },
+    {
+      typeId: "minecraft:tnt",
+      weapon: "tnt",
+      displayItem: "Tnt",
+      index: "12",
+      addable: "Sword",
+    },
+    {
+      typeId: "minecraft:totem_of_undying",
+      weapon: "totem",
+      displayItem: "Tot",
+      index: "13",
+      addable: "Sword, Axe, Scythe, Hammer, Mace[Addons]",
+    },
+    {
+      typeId: "minecraft:wither_rose",
+      weapon: "wither",
+      displayItem: "Wit",
+      index: "14",
+      addable: "Sword, Axe, Scythe",
+    },
+    {
+      typeId: "minecraft:ominous_bottle",
+      weapon: "raid",
+      displayItem: "Rai",
+      index: "15",
+      addable: "Sword, Axe",
+    },
+    {
+      typeId: "minecraft:blaze_powder",
+      weapon: "blaze",
+      displayItem: "Bla",
+      index: "16",
+      addable: "Sword, Axe, Scythe, Hammer",
+    },
   ];
 
   const CHANGEABLE_WEAPONS = [
@@ -148,10 +256,15 @@ export function weapon_combiner() {
             z: Math.floor(entity.location.z),
           });
           if ((underBlock && underBlock.typeId !== "bey:materia_conflux") || entity.hasTag(`gonnaDie`)) {
-            entity.runCommand(`/tp @s 100 100 100`);
+            entity.runCommand(`/tp @s 100 20 100`);
             Minecraft.system.runTimeout(() => {
               entity.runCommand(`/kill @s`);
             }, 4);
+          }
+          if (player.hasTag(`doOnce`)) {
+            Minecraft.system.runTimeout(() => {
+              player.removeTag(`doOnce`);
+            }, 10);
           }
         }
       });
@@ -168,7 +281,6 @@ export function weapon_combiner() {
         let playerHeld = (player.getComponent("equippable") as Minecraft.EntityEquippableComponent).getEquipment(
           Minecraft.EquipmentSlot.Mainhand
         );
-        Minecraft.world.sendMessage(`${playerHeld?.typeId}`);
         let { x, y, z } = block.location;
 
         COMBINED_WEAPONS.forEach((key) => {
@@ -182,6 +294,9 @@ export function weapon_combiner() {
               block.setPermutation(block.permutation.withState("bey:materia_conflux", 1));
               block.dimension.runCommand(`/particle minecraft:totem_particle ${x} ${y + 1} ${z}`);
               Minecraft.world.playSound("bey_place_sound", block.location, { volume: 10, pitch: 0.3 });
+              player.runCommand(
+                `/tellraw @a {"rawtext":[{"text":"§dCurrent §6§lMaterial§r §dCan Be Combined With a §6§l${key.addable}"}]}`
+              );
 
               let entity = block.dimension.spawnEntity("bey:weapon_combiner_display", { x, y: y + 1, z });
               if (entity) {
@@ -191,6 +306,21 @@ export function weapon_combiner() {
 
               player.runCommand(`/clear @s ${key.typeId} 0 1`);
             }
+          }
+          if (entitiesAbove.length != 0) {
+            entitiesAbove.forEach((entity) => {
+              let index = entity.getTags()[0];
+              COMBINED_WEAPONS.forEach((key) => {
+                if (key.index == index) {
+                  if (playerHeld == undefined && !player.hasTag(`doOnce`)) {
+                    player.runCommand(
+                      `/tellraw @a {"rawtext":[{"text":"§dCurrent §6§lMaterial§r §dCan Be Combined With a §6§l${key.addable}"}]}`
+                    );
+                    player.addTag(`doOnce`);
+                  }
+                }
+              });
+            });
           }
         });
 
