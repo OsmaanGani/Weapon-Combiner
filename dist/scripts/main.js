@@ -1,5 +1,156 @@
 // scripts/weapon_combiner.ts
 import * as Minecraft from "@minecraft/server";
+
+// scripts/data/COMBINED_WEAPONS.ts
+var COMBINED_WEAPONS = [
+  {
+    typeId: "minecraft:amethyst_shard",
+    weapon: "amy",
+    displayItem: "Ame",
+    index: "1",
+    addable: "Sword, Axe, Hammer, Scythe, Mace[Addons]"
+  },
+  {
+    typeId: "minecraft:nether_star",
+    weapon: "bea",
+    displayItem: "Net",
+    index: "2",
+    addable: "Sword, Axe, Hammer, Scythe, Mace[Addons]"
+  },
+  {
+    typeId: "minecraft:oak_leaves",
+    weapon: "cam",
+    displayItem: "Oak",
+    index: "3",
+    addable: "Sword"
+  },
+  {
+    typeId: "minecraft:crying_obsidian",
+    weapon: "cry",
+    displayItem: "Cry",
+    index: "4",
+    addable: "Sword, Axe, Hammer, Mace[Addons]"
+  },
+  {
+    typeId: "minecraft:echo_shard",
+    weapon: "deep",
+    displayItem: "Ech",
+    index: "5",
+    addable: "Sword, Axe, Hammer, Mace[Addons]"
+  },
+  {
+    typeId: "minecraft:ochre_froglight",
+    weapon: "froglight",
+    displayItem: "Frg",
+    index: "6",
+    addable: "Sword"
+  },
+  {
+    typeId: "minecraft:pearlescent_froglight",
+    weapon: "froglight",
+    displayItem: "Frg",
+    index: "6",
+    addable: "Sword, Axe, Hammer, Mace[Addons]"
+  },
+  {
+    typeId: "minecraft:verdant_froglight",
+    weapon: "froglight",
+    displayItem: "Frg",
+    index: "6",
+    addable: "Sword"
+  },
+  {
+    typeId: "minecraft:enchanted_golden_apple",
+    weapon: "god",
+    displayItem: "Ega",
+    index: "7",
+    addable: "Sword, Axe, Scythe, Hammer"
+  },
+  {
+    typeId: "minecraft:magma",
+    weapon: "magma",
+    displayItem: "Mag",
+    index: "8",
+    addable: "Sword, Axe, Scythe, Hammer, Mace[Addons]"
+  },
+  {
+    typeId: "minecraft:rabbit_foot",
+    weapon: "rabbit",
+    displayItem: "Rab",
+    index: "9",
+    addable: "Sword, Axe, Scythe"
+  },
+  {
+    typeId: "minecraft:redstone",
+    weapon: "redstone",
+    displayItem: "Red",
+    index: "10",
+    addable: "Sword, Axe, Hammer, Mace[Addons]"
+  },
+  {
+    typeId: "minecraft:heart_of_the_sea",
+    weapon: "sea",
+    displayItem: "Sea",
+    index: "11",
+    addable: "Axe"
+  },
+  {
+    typeId: "minecraft:tnt",
+    weapon: "tnt",
+    displayItem: "Tnt",
+    index: "12",
+    addable: "Sword"
+  },
+  {
+    typeId: "minecraft:totem_of_undying",
+    weapon: "totem",
+    displayItem: "Tot",
+    index: "13",
+    addable: "Sword, Axe, Scythe, Hammer, Mace[Addons]"
+  },
+  {
+    typeId: "minecraft:wither_rose",
+    weapon: "wither",
+    displayItem: "Wit",
+    index: "14",
+    addable: "Sword, Axe, Scythe"
+  },
+  {
+    typeId: "minecraft:ominous_bottle",
+    weapon: "raid",
+    displayItem: "Rai",
+    index: "15",
+    addable: "Sword, Axe"
+  },
+  {
+    typeId: "minecraft:blaze_powder",
+    weapon: "blaze",
+    displayItem: "Bla",
+    index: "16",
+    addable: "Sword, Axe, Scythe, Hammer"
+  }
+];
+
+// scripts/data/CHANGEABLE_WEAPONS.ts
+var CHANGEABLE_WEAPONS = [
+  { typeId: "minecraft:iron_sword", itemTag: "is" },
+  { typeId: "minecraft:diamond_sword", itemTag: "ds" },
+  { typeId: "minecraft:netherite_sword", itemTag: "ns" },
+  { typeId: "minecraft:iron_axe", itemTag: "ia" },
+  { typeId: "minecraft:diamond_axe", itemTag: "da" },
+  { typeId: "minecraft:netherite_axe", itemTag: "na" },
+  { typeId: "bey:default_dh", itemTag: "dh" },
+  { typeId: "bey:default_ih", itemTag: "ih" },
+  { typeId: "bey:default_nh", itemTag: "nh" },
+  { typeId: "bey:default_dsc", itemTag: "dsc" },
+  { typeId: "bey:default_isc", itemTag: "isc" },
+  { typeId: "bey:defaut_nsc", itemTag: "nsc" },
+  { typeId: "bey:default_dm", itemTag: "dm" },
+  { typeId: "bey:default_im", itemTag: "im" },
+  { typeId: "bey:default_nm", itemTag: "nm" }
+];
+
+// scripts/data/WEAPON_ABILITIES.ts
 var WEAPON_ABILITIES = [
   // AMY
   { weaponTag: "amy", abilityLore: "\xA7r\xA7d[Passive] REGEN Buff When Holding", abilityIndex: 0 },
@@ -82,250 +233,132 @@ var WEAPON_ABILITIES = [
   { weaponTag: "raid", abilityLore: "\xA7r\xA7d[On-Hit] Curse The Enemy", abilityIndex: 2 },
   { weaponTag: "raid", abilityLore: "\xA7r\xA7d[On-Hurt] Curse The Attacker", abilityIndex: 3 }
 ];
-function weapon_combiner() {
-  const COMBINED_WEAPONS = [
-    {
-      typeId: "minecraft:amethyst_shard",
-      weapon: "amy",
-      displayItem: "Ame",
-      index: "1",
-      addable: "Sword, Axe, Hammer, Scythe, Mace[Addons]"
-    },
-    {
-      typeId: "minecraft:nether_star",
-      weapon: "bea",
-      displayItem: "Net",
-      index: "2",
-      addable: "Sword, Axe, Hammer, Scythe, Mace[Addons]"
-    },
-    {
-      typeId: "minecraft:oak_leaves",
-      weapon: "cam",
-      displayItem: "Oak",
-      index: "3",
-      addable: "Sword"
-    },
-    {
-      typeId: "minecraft:crying_obsidian",
-      weapon: "cry",
-      displayItem: "Cry",
-      index: "4",
-      addable: "Sword, Axe, Hammer, Mace[Addons]"
-    },
-    {
-      typeId: "minecraft:echo_shard",
-      weapon: "deep",
-      displayItem: "Ech",
-      index: "5",
-      addable: "Sword, Axe, Hammer, Mace[Addons]"
-    },
-    {
-      typeId: "minecraft:ochre_froglight",
-      weapon: "froglight",
-      displayItem: "Frg",
-      index: "6",
-      addable: "Sword"
-    },
-    {
-      typeId: "minecraft:pearlescent_froglight",
-      weapon: "froglight",
-      displayItem: "Frg",
-      index: "6",
-      addable: "Sword, Axe, Hammer, Mace[Addons]"
-    },
-    {
-      typeId: "minecraft:verdant_froglight",
-      weapon: "froglight",
-      displayItem: "Frg",
-      index: "6",
-      addable: "Sword"
-    },
-    {
-      typeId: "minecraft:enchanted_golden_apple",
-      weapon: "god",
-      displayItem: "Ega",
-      index: "7",
-      addable: "Sword, Axe, Scythe, Hammer"
-    },
-    {
-      typeId: "minecraft:magma",
-      weapon: "magma",
-      displayItem: "Mag",
-      index: "8",
-      addable: "Sword, Axe, Scythe, Hammer, Mace[Addons]"
-    },
-    {
-      typeId: "minecraft:rabbit_foot",
-      weapon: "rabbit",
-      displayItem: "Rab",
-      index: "9",
-      addable: "Sword, Axe, Scythe"
-    },
-    {
-      typeId: "minecraft:redstone",
-      weapon: "redstone",
-      displayItem: "Red",
-      index: "10",
-      addable: "Sword, Axe, Hammer, Mace[Addons]"
-    },
-    {
-      typeId: "minecraft:heart_of_the_sea",
-      weapon: "sea",
-      displayItem: "Sea",
-      index: "11",
-      addable: "Axe"
-    },
-    {
-      typeId: "minecraft:tnt",
-      weapon: "tnt",
-      displayItem: "Tnt",
-      index: "12",
-      addable: "Sword"
-    },
-    {
-      typeId: "minecraft:totem_of_undying",
-      weapon: "totem",
-      displayItem: "Tot",
-      index: "13",
-      addable: "Sword, Axe, Scythe, Hammer, Mace[Addons]"
-    },
-    {
-      typeId: "minecraft:wither_rose",
-      weapon: "wither",
-      displayItem: "Wit",
-      index: "14",
-      addable: "Sword, Axe, Scythe"
-    },
-    {
-      typeId: "minecraft:ominous_bottle",
-      weapon: "raid",
-      displayItem: "Rai",
-      index: "15",
-      addable: "Sword, Axe"
-    },
-    {
-      typeId: "minecraft:blaze_powder",
-      weapon: "blaze",
-      displayItem: "Bla",
-      index: "16",
-      addable: "Sword, Axe, Scythe, Hammer"
-    }
-  ];
-  const CHANGEABLE_WEAPONS = [
-    { typeId: "minecraft:iron_sword", itemTag: "is" },
-    { typeId: "minecraft:diamond_sword", itemTag: "ds" },
-    { typeId: "minecraft:netherite_sword", itemTag: "ns" },
-    { typeId: "minecraft:iron_axe", itemTag: "ia" },
-    { typeId: "minecraft:diamond_axe", itemTag: "da" },
-    { typeId: "minecraft:netherite_axe", itemTag: "na" },
-    { typeId: "bey:default_dh", itemTag: "dh" },
-    { typeId: "bey:default_ih", itemTag: "ih" },
-    { typeId: "bey:default_nh", itemTag: "nh" },
-    { typeId: "bey:default_dsc", itemTag: "dsc" },
-    { typeId: "bey:default_isc", itemTag: "isc" },
-    { typeId: "bey:defaut_nsc", itemTag: "nsc" },
-    { typeId: "bey:default_dm", itemTag: "dm" },
-    { typeId: "bey:default_im", itemTag: "im" },
-    { typeId: "bey:default_nm", itemTag: "nm" }
-  ];
-  Minecraft.system.runInterval(() => {
-    Minecraft.world.getAllPlayers().forEach((player) => {
-      player.dimension.getEntities().forEach((entity) => {
-        if (entity.typeId.includes(`bey:weapon_combiner_display`)) {
-          const underBlock = entity.dimension.getBlock({
-            x: Math.floor(entity.location.x),
-            y: Math.floor(entity.location.y) - 1,
-            z: Math.floor(entity.location.z)
-          });
-          if (underBlock && underBlock.typeId !== "bey:materia_conflux" || entity.hasTag(`gonnaDie`)) {
-            entity.runCommand(`/tp @s 100 20 100`);
-            Minecraft.system.runTimeout(() => {
-              entity.runCommand(`/kill @s`);
-            }, 4);
-          }
-          if (player.hasTag(`doOnce`)) {
-            Minecraft.system.runTimeout(() => {
-              player.removeTag(`doOnce`);
-            }, 10);
-          }
-        }
-      });
-    });
-  });
-  Minecraft.world.beforeEvents.worldInitialize.subscribe((initEvent) => {
-    initEvent.blockComponentRegistry.registerCustomComponent("bey:materia_conflux_function", {
-      onPlayerInteract: (event) => {
-        let player = event.player;
-        const block = event.block;
-        if (!player)
-          return;
-        let playerHeld = player.getComponent("equippable").getEquipment(
-          Minecraft.EquipmentSlot.Mainhand
-        );
-        let { x, y, z } = block.location;
-        COMBINED_WEAPONS.forEach((key) => {
-          let entitiesAbove = block.dimension.getEntities().filter((entity) => {
-            let pos = entity.location;
-            return Math.floor(pos.x) === x && Math.floor(pos.y) === y + 1 && Math.floor(pos.z) === z;
-          });
-          if (entitiesAbove.length == 0) {
-            if (playerHeld && playerHeld.typeId === key.typeId) {
-              block.setPermutation(block.permutation.withState("bey:materia_conflux", 1));
-              block.dimension.runCommand(`/particle minecraft:totem_particle ${x} ${y + 1} ${z}`);
-              Minecraft.world.playSound("bey_place_sound", block.location, { volume: 10, pitch: 0.3 });
-              player.runCommand(
-                `/tellraw @a {"rawtext":[{"text":"\xA7dCurrent \xA76\xA7lMaterial\xA7r \xA7dCan Be Combined With a \xA76\xA7l${key.addable}"}]}`
-              );
-              let entity = block.dimension.spawnEntity("bey:weapon_combiner_display", { x, y: y + 1, z });
-              if (entity) {
-                entity.triggerEvent(`bey:var${key.displayItem}`);
-                entity.addTag(`${key.index}`);
-              }
-              player.runCommand(`/clear @s ${key.typeId} 0 1`);
+
+// scripts/weapon_combiner.ts
+var WeaponCombiner = class {
+  constructor() {
+    this.initialize();
+  }
+  initialize() {
+    Minecraft.world.sendMessage("Weapon Combiner Initialized");
+    Minecraft.system.runInterval(() => {
+      Minecraft.world.getAllPlayers().forEach((player) => {
+        player.dimension.getEntities().forEach((entity) => {
+          if (entity.typeId.includes(`bey:weapon_combiner_display`)) {
+            const underBlock = entity.dimension.getBlock({
+              x: Math.floor(entity.location.x),
+              y: Math.floor(entity.location.y) - 1,
+              z: Math.floor(entity.location.z)
+            });
+            if (underBlock && underBlock.typeId !== "bey:materia_conflux" || entity.hasTag(`gonnaDie`)) {
+              entity.teleport({ x: 100, y: 20, z: 100 });
+              Minecraft.system.runTimeout(() => {
+                entity.kill();
+              }, 4);
+            }
+            if (player.hasTag(`doOnce`)) {
+              Minecraft.system.runTimeout(() => {
+                player.removeTag(`doOnce`);
+              }, 10);
             }
           }
-          if (entitiesAbove.length != 0) {
-            entitiesAbove.forEach((entity) => {
-              let index = entity.getTags()[0];
-              COMBINED_WEAPONS.forEach((key2) => {
-                if (key2.index == index) {
-                  if (playerHeld == void 0 && !player.hasTag(`doOnce`)) {
-                    player.runCommand(
-                      `/tellraw @a {"rawtext":[{"text":"\xA7dCurrent \xA76\xA7lMaterial\xA7r \xA7dCan Be Combined With a \xA76\xA7l${key2.addable}"}]}`
-                    );
-                    player.addTag(`doOnce`);
+        });
+      });
+    });
+    Minecraft.world.beforeEvents.worldInitialize.subscribe((initEvent) => {
+      initEvent.blockComponentRegistry.registerCustomComponent("bey:materia_conflux_function", {
+        onPlayerInteract: (event) => {
+          let player = event.player;
+          const block = event.block;
+          if (!player)
+            return;
+          let playerHeld = player.getComponent("equippable").getEquipment(
+            Minecraft.EquipmentSlot.Mainhand
+          );
+          let { x, y, z } = block.location;
+          COMBINED_WEAPONS.forEach((key) => {
+            let entitiesAbove = block.dimension.getEntities().filter((entity) => {
+              let pos = entity.location;
+              return Math.floor(pos.x) === x && Math.floor(pos.y) === y + 1 && Math.floor(pos.z) === z;
+            });
+            if (entitiesAbove.length == 0) {
+              if (playerHeld && playerHeld.typeId === key.typeId) {
+                block.setPermutation(block.permutation.withState("bey:materia_conflux", 1));
+                block.dimension.spawnParticle("minecraft:totem_particle", { x, y: y + 1, z });
+                Minecraft.world.playSound("bey_place_sound", block.location, { volume: 10, pitch: 0.3 });
+                player.sendMessage(`\xA7dCurrent \xA76\xA7lMaterial\xA7r \xA7dCan Be Combined With a \xA76\xA7l${key.addable}`);
+                let entity = block.dimension.spawnEntity("bey:weapon_combiner_display", { x, y: y + 1, z });
+                if (entity) {
+                  entity.triggerEvent(`bey:var${key.displayItem}`);
+                  entity.addTag(`${key.index}`);
+                }
+                player.runCommand(`/clear @s ${key.typeId} 0 1`);
+              }
+            }
+            if (entitiesAbove.length != 0) {
+              entitiesAbove.forEach((entity) => {
+                let index = entity.getTags()[0];
+                COMBINED_WEAPONS.forEach((key2) => {
+                  if (key2.index == index) {
+                    if (playerHeld == void 0 && !player.hasTag(`doOnce`)) {
+                      player.sendMessage(`\xA7dCurrent \xA76\xA7lMaterial\xA7r \xA7dCan Be Combined With a \xA76\xA7l${key2.addable}`);
+                      player.addTag(`doOnce`);
+                    }
+                  }
+                });
+              });
+            }
+          });
+          CHANGEABLE_WEAPONS.forEach((weapon) => {
+            if (playerHeld && playerHeld.typeId == weapon.typeId) {
+              let { x: x2, y: y2, z: z2 } = block.location;
+              let randomIndex = Math.floor(Math.random() * COMBINED_WEAPONS.length);
+              Minecraft.world.sendMessage(`${randomIndex}`);
+              let entitiesAbove = block.dimension.getEntities().filter((entity) => {
+                let pos = entity.location;
+                return Math.floor(pos.x) === x2 && Math.floor(pos.y) === y2 + 1 && Math.floor(pos.z) === z2;
+              });
+              entitiesAbove.forEach((entity) => {
+                const index = entity.getTags()[0];
+                const currentLore = playerHeld.getLore();
+                const combinedWeapon = COMBINED_WEAPONS.find((w) => w.index == index);
+                if (!combinedWeapon)
+                  return;
+                const matchingAbilities = WEAPON_ABILITIES.filter((a) => a.weaponTag === combinedWeapon.weapon);
+                const hasMatchingLore = matchingAbilities.some((a) => currentLore.includes(a.abilityLore));
+                if (!hasMatchingLore) {
+                  player.runCommand(
+                    `/replaceitem entity @s slot.weapon.mainhand 0 bey:${combinedWeapon.weapon}_${weapon.itemTag}`
+                  );
+                  block.dimension.spawnParticle("minecraft:totem_particle", { x: x2, y: y2 + 1, z: z2 });
+                  Minecraft.world.playSound(`bey_place_sound`, block.location, { volume: 10, pitch: 0.3 });
+                  entitiesAbove.forEach((e) => e.addTag(`gonnaDie`));
+                  if (matchingAbilities.length > 0) {
+                    let randomAbility = matchingAbilities[Math.floor(Math.random() * matchingAbilities.length)];
+                    const inventory = player.getComponent("minecraft:inventory").container;
+                    const selectedSlotIndex = player.selectedSlotIndex;
+                    if (!inventory)
+                      return;
+                    const item = inventory.getItem(selectedSlotIndex);
+                    if (!item)
+                      return;
+                    Minecraft.system.runTimeout(() => {
+                      item.setLore([randomAbility.abilityLore]);
+                      inventory.setItem(selectedSlotIndex, item);
+                    });
                   }
                 }
               });
-            });
-          }
-        });
-        CHANGEABLE_WEAPONS.forEach((weapon) => {
-          if (playerHeld && playerHeld.typeId == weapon.typeId) {
-            let { x: x2, y: y2, z: z2 } = block.location;
-            let randomIndex = Math.floor(Math.random() * COMBINED_WEAPONS.length);
-            Minecraft.world.sendMessage(`${randomIndex}`);
-            let entitiesAbove = block.dimension.getEntities().filter((entity) => {
-              let pos = entity.location;
-              return Math.floor(pos.x) === x2 && Math.floor(pos.y) === y2 + 1 && Math.floor(pos.z) === z2;
-            });
-            entitiesAbove.forEach((entity) => {
-              let index = entity.getTags()[0];
-              let currentLore = playerHeld.getLore();
-              let combinedWeapon = COMBINED_WEAPONS.find((w) => w.index == index);
-              if (!combinedWeapon)
-                return;
-              let matchingAbilities = WEAPON_ABILITIES.filter((a) => a.weaponTag === combinedWeapon.weapon);
-              let hasMatchingLore = matchingAbilities.some((a) => currentLore.includes(a.abilityLore));
-              if (!hasMatchingLore) {
-                player.runCommand(
-                  `/replaceitem entity @s slot.weapon.mainhand 0 bey:${combinedWeapon.weapon}_${weapon.itemTag}`
-                );
-                block.dimension.runCommand(`/particle minecraft:totem_particle ${x2} ${y2 + 1} ${z2}`);
-                Minecraft.world.playSound(`bey_place_sound`, block.location, { volume: 10, pitch: 0.3 });
-                entitiesAbove.forEach((e) => e.addTag(`gonnaDie`));
-                if (matchingAbilities.length > 0) {
-                  let randomAbility = matchingAbilities[Math.floor(Math.random() * matchingAbilities.length)];
+            }
+            COMBINED_WEAPONS.forEach((abilityWeapon) => {
+              let entitiesAbove = block.dimension.getEntities().filter((entity) => {
+                let pos = entity.location;
+                return Math.floor(pos.x) === x && Math.floor(pos.y) === y + 1 && Math.floor(pos.z) === z;
+              });
+              entitiesAbove.forEach((entity) => {
+                let index = entity.getTags()[0];
+                if (playerHeld?.typeId.split(":")[1].split("_")[0] == abilityWeapon.weapon && index == abilityWeapon.index && playerHeld?.typeId.split(":")[0] == "bey") {
+                  let customTag = playerHeld.typeId.split(":")[1].split("_")[0];
                   const inventory = player.getComponent("minecraft:inventory").container;
                   const selectedSlotIndex = player.selectedSlotIndex;
                   if (!inventory)
@@ -333,55 +366,32 @@ function weapon_combiner() {
                   const item = inventory.getItem(selectedSlotIndex);
                   if (!item)
                     return;
-                  Minecraft.system.runTimeout(() => {
-                    item.setLore([randomAbility.abilityLore]);
-                    inventory.setItem(selectedSlotIndex, item);
-                  });
+                  let currentLore = item.getLore() || [];
+                  const abilitiesForWeapon = WEAPON_ABILITIES.filter((a) => a.weaponTag === customTag);
+                  const availableAbilities = abilitiesForWeapon.filter(
+                    (ability) => !currentLore.includes(ability.abilityLore)
+                  );
+                  if (availableAbilities.length > 0) {
+                    let randomAbility = availableAbilities[Math.floor(Math.random() * availableAbilities.length)];
+                    Minecraft.system.runTimeout(() => {
+                      currentLore.push(randomAbility.abilityLore);
+                      item.setLore(currentLore);
+                      inventory.setItem(selectedSlotIndex, item);
+                      block.setPermutation(block.permutation.withState("bey:materia_conflux", 0));
+                      block.dimension.spawnParticle("minecraft:totem_particle", { x, y: y + 1, z });
+                      entity.addTag(`gonnaDie`);
+                      Minecraft.world.playSound(`bey_place_sound`, block.location, { volume: 10, pitch: 0.3 });
+                    });
+                  }
                 }
-              }
-            });
-          }
-          COMBINED_WEAPONS.forEach((abilityWeapon) => {
-            let entitiesAbove = block.dimension.getEntities().filter((entity) => {
-              let pos = entity.location;
-              return Math.floor(pos.x) === x && Math.floor(pos.y) === y + 1 && Math.floor(pos.z) === z;
-            });
-            entitiesAbove.forEach((entity) => {
-              let index = entity.getTags()[0];
-              if (playerHeld?.typeId.split(":")[1].split("_")[0] == abilityWeapon.weapon && index == abilityWeapon.index && playerHeld?.typeId.split(":")[0] == "bey") {
-                let customTag = playerHeld.typeId.split(":")[1].split("_")[0];
-                const inventory = player.getComponent("minecraft:inventory").container;
-                const selectedSlotIndex = player.selectedSlotIndex;
-                if (!inventory)
-                  return;
-                const item = inventory.getItem(selectedSlotIndex);
-                if (!item)
-                  return;
-                let currentLore = item.getLore() || [];
-                const abilitiesForWeapon = WEAPON_ABILITIES.filter((a) => a.weaponTag === customTag);
-                const availableAbilities = abilitiesForWeapon.filter(
-                  (ability) => !currentLore.includes(ability.abilityLore)
-                );
-                if (availableAbilities.length > 0) {
-                  let randomAbility = availableAbilities[Math.floor(Math.random() * availableAbilities.length)];
-                  Minecraft.system.runTimeout(() => {
-                    currentLore.push(randomAbility.abilityLore);
-                    item.setLore(currentLore);
-                    inventory.setItem(selectedSlotIndex, item);
-                    block.setPermutation(block.permutation.withState("bey:materia_conflux", 0));
-                    block.dimension.runCommand(`/particle minecraft:totem_particle ${x} ${y + 1} ${z}`);
-                    entity.addTag(`gonnaDie`);
-                    Minecraft.world.playSound(`bey_place_sound`, block.location, { volume: 10, pitch: 0.3 });
-                  });
-                }
-              }
+              });
             });
           });
-        });
-      }
+        }
+      });
     });
-  });
-}
+  }
+};
 
 // scripts/weapon_ability_passive.ts
 import * as Minecraft2 from "@minecraft/server";
@@ -1171,11 +1181,14 @@ function weapon_cooldown() {
 }
 
 // scripts/main.ts
-weapon_combiner();
+function initialize() {
+  new WeaponCombiner();
+}
 weapon_passive();
 weapon_onhit();
 weapon_active();
 weapon_onhurt();
 weapon_cooldown();
+initialize();
 
 //# sourceMappingURL=../debug/main.js.map

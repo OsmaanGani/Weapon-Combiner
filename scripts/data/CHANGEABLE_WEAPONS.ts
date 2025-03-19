@@ -1,0 +1,17 @@
+  export const CHANGEABLE_WEAPONS = [
+    { typeId: "minecraft:iron_sword", itemTag: "is" },
+    { typeId: "minecraft:diamond_sword", itemTag: "ds" },
+    { typeId: "minecraft:netherite_sword", itemTag: "ns" },
+    { typeId: "minecraft:iron_axe", itemTag: "ia" },
+    { typeId: "minecraft:diamond_axe", itemTag: "da" },
+    { typeId: "minecraft:netherite_axe", itemTag: "na" },
+    { typeId: "bey:default_dh", itemTag: "dh" },
+    { typeId: "bey:default_ih", itemTag: "ih" },
+    { typeId: "bey:default_nh", itemTag: "nh" },
+    { typeId: "bey:default_dsc", itemTag: "dsc" },
+    { typeId: "bey:default_isc", itemTag: "isc" },
+    { typeId: "bey:defaut_nsc", itemTag: "nsc" },
+    { typeId: "bey:default_dm", itemTag: "dm" },
+    { typeId: "bey:default_im", itemTag: "im" },
+    { typeId: "bey:default_nm", itemTag: "nm" },
+  ];
