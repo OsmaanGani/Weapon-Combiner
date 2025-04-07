@@ -21,7 +21,10 @@
             "Geometry.totem",
             "Geometry.wither_rose",
             "Geometry.raid_bottle",
-            "Geometry.blaze"
+            "Geometry.blaze",
+            "Geometry.spore",
+            "Geometry.clock",
+            "Geometry.soul"
           ]
         },
         "textures": {
@@ -42,7 +45,10 @@
             "Texture.totem",
             "Texture.wither_rose",
             "Texture.raid_bottle",
-            "Texture.blaze"
+            "Texture.blaze",
+            "Texture.spore",
+            "Texture.clock",
+            "Texture.soul"
           ]
         },
         "materials": {
@@ -63,7 +69,10 @@
             "Material.totem",
             "Material.wither_rose",
             "Material.raid_bottle",
-            "Material.blaze"
+            "Material.blaze",
+            "Material.spore",
+            "Material.clock",
+            "Material.soul"
           ]
         }
       },

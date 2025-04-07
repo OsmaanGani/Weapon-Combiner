@@ -591,6 +591,26 @@
     },
     "bey_raid_na": {
       "textures": "textures/items/raid_na"
+    },
+
+    "bey_spore_ds": {
+      "textures": "textures/items/spore_diamond_sword"
+    },
+    "bey_spore_is": {
+      "textures": "textures/items/spore_iron_sword"
+    },
+    "bey_spore_ns": {
+      "textures": "textures/items/spore_netherite_sword"
+    },
+
+    "bey_spore_dsc": {
+      "textures": "textures/items/spore_diamond_scythe"
+    },
+    "bey_spore_isc": {
+      "textures": "textures/items/spore_iron_scythe"
+    },
+    "bey_spore_nsc": {
+      "textures": "textures/items/spore_netherite_scythe"
     }
   }
 }

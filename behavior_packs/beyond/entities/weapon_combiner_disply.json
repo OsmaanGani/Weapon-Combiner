@@ -91,6 +91,21 @@
         "minecraft:variant": {
           "value": 15
         }
+      },
+      "bey:variantSpo": {
+        "minecraft:variant": {
+          "value": 17
+        }
+      },
+      "bey:variantClk": {
+        "minecraft:variant": {
+          "value": 18
+        }
+      },
+      "bey:variantSou": {
+        "minecraft:variant": {
+          "value": 19
+        }
       }
     },
     "components": {
@@ -191,6 +206,21 @@
       "bey:varWit": {
         "add": {
           "component_groups": ["bey:variantWit"]
+        }
+      },
+      "bey:varSpo": {
+        "add": {
+          "component_groups": ["bey:variantSpo"]
+        }
+      },
+      "bey:varClk": {
+        "add": {
+          "component_groups": ["bey:variantClk"]
+        }
+      },
+      "bey:varSou": {
+        "add": {
+          "component_groups": ["bey:variantSou"]
         }
       }
     }

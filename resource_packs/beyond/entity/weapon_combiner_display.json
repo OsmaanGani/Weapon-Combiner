@@ -20,7 +20,10 @@
         "totem": "entity_alphatest",
         "wither_rose": "entity_alphatest",
         "raid_bottle": "entity_alphatest",
-        "blaze": "entity_alphatest"
+        "blaze": "entity_alphatest",
+        "spore": "entity_alphatest",
+        "clock": "entity_alphatest",
+        "soul": "entity_alphatest"
       },
       "textures": {
         "default": "textures/entity/weapon_combiner_display_empty",
@@ -39,7 +42,10 @@
         "totem": "textures/items/totem",
         "wither_rose": "textures/blocks/flower_wither_rose",
         "raid_bottle": "textures/items/ominous_bottle",
-        "blaze": "textures/items/blaze_powder"
+        "blaze": "textures/items/blaze_powder",
+        "spore": "textures/blocks/spore_blossom",
+        "clock": "textures/items/clock_item",
+        "soul": "textures/blocks/soul_sand"
       },
       "geometry": {
         "default": "geometry.weapon_combiner_display",
@@ -58,7 +64,10 @@
         "totem": "geometry.weapon_combiner_displayTot",
         "wither_rose": "geometry.weapon_combiner_displayWit",
         "raid_bottle": "geometry.weapon_combiner_displayRai",
-        "blaze": "geometry.weapon_combiner_displayBla"
+        "blaze": "geometry.weapon_combiner_displayBla",
+        "spore": "geometry.weapon_combiner_displaySpo",
+        "clock": "geometry.weapon_combiner_displayClk",
+        "soul": "geometry.weapon_combiner_block_display"
       },
       "animations": {
         "rotate": "animation.weapon_combiner_display.rotate"

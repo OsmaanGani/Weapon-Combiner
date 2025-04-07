@@ -177,6 +177,15 @@ export function weapon_passive() {
     if (player.typeId != "minecraft:player") return;
 
     switch (true) {
+      case currentLore && currentLore.some((line: string) => line === "§r§d[Passive] Increased Damage While Poisoned"):
+        if (
+          player.getEffect("minecraft:wither") ||
+          player.getEffect("minecraft:poison") ||
+          player.getEffect("fatal_poison")
+        ) {
+          hurtEntity.applyDamage(7, { cause: Minecraft.EntityDamageCause.suicide });
+        }
+        break;
       case currentLore &&
         currentLore.some((line: string) => line === "§r§d[Passive] Extra Damage To Illager Type Mobs"):
         const ILLAGER_MOBS = [

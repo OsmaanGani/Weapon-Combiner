@@ -65,7 +65,6 @@ export class WeaponCombiner {
                   entity.triggerEvent(`bey:var${key.displayItem}`);
                   entity.addTag(`${key.index}`);
                 }
-                // maybe could loop through the inv and find the item to clear, but this is fine for now
                 //eslint-disable-next-line
                 player.runCommand(`/clear @s ${key.typeId} 0 1`);
               }
@@ -108,7 +107,6 @@ export class WeaponCombiner {
                 const hasMatchingLore = matchingAbilities.some((a) => currentLore.includes(a.abilityLore));
 
                 if (!hasMatchingLore) {
-                  // could optimize but this is fine for now
                   //eslint-disable-next-line
                   player.runCommand(
                     `/replaceitem entity @s slot.weapon.mainhand 0 bey:${combinedWeapon.weapon}_${weapon.itemTag}`
@@ -129,7 +127,7 @@ export class WeaponCombiner {
                     if (!item) return;
 
                     Minecraft.system.runTimeout(() => {
-                      item.setLore([randomAbility.abilityLore]); // ✅ Directly assigning a random ability
+                      item.setLore([randomAbility.abilityLore]);
                       inventory.setItem(selectedSlotIndex, item);
                     });
                   }
@@ -146,6 +144,7 @@ export class WeaponCombiner {
               entitiesAbove.forEach((entity) => {
                 let index = entity.getTags()[0];
                 if (
+                  abilityWeapon &&
                   playerHeld?.typeId.split(":")[1].split("_")[0] == abilityWeapon.weapon &&
                   index == abilityWeapon.index &&
                   playerHeld?.typeId.split(":")[0] == "bey"
@@ -161,15 +160,12 @@ export class WeaponCombiner {
 
                   let currentLore = item.getLore() || [];
 
-                  // ✅ Get all available abilities for this weapon
                   const abilitiesForWeapon = WEAPON_ABILITIES.filter((a) => a.weaponTag === customTag);
 
-                  // ✅ Filter out already applied abilities
                   const availableAbilities = abilitiesForWeapon.filter(
                     (ability) => !currentLore.includes(ability.abilityLore)
                   );
 
-                  // ✅ Randomly select an ability if there are any available
                   if (availableAbilities.length > 0) {
                     let randomAbility = availableAbilities[Math.floor(Math.random() * availableAbilities.length)];
 

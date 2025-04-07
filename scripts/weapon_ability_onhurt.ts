@@ -34,7 +34,18 @@ export function weapon_onhurt() {
     if (!currentLore) return;
 
     switch (true) {
-      case currentLore.some((line: string) => line === "§r§d[On-Hurt] AoE WEAKNESS On Hurt") && onHurtCooldown === 0:
+      case currentLore.some((line: string) => line === "§r§d[On-Hurt] AoE Poison Where you are hurt") &&
+        onHurtCooldown === 0:
+        player.dimension.spawnEntity("bey:radius_entity", player.location);
+
+        player.dimension.getEntities({ maxDistance: 3, location: player.location }).forEach((entity) => {
+          if (entity.nameTag != player.nameTag) {
+            entity.addEffect(`poison`, 60, { amplifier: 2 });
+          }
+        });
+
+        player.setDynamicProperty("on_hurt_cooldown", 300);
+        break;
         player.dimension.spawnEntity("bey:radius_entity", player.location);
 
         player.dimension.getEntities({ maxDistance: 3, location: player.location }).forEach((entity) => {

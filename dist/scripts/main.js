@@ -128,6 +128,27 @@ var COMBINED_WEAPONS = [
     displayItem: "Bla",
     index: "16",
     addable: "Sword, Axe, Scythe, Hammer"
+  },
+  {
+    typeId: "minecraft:spore_blossom",
+    weapon: "spore",
+    displayItem: "Spo",
+    index: "17",
+    addable: "Sword, Scythe"
+  },
+  {
+    typeId: "minecraft:clock",
+    weapon: "clock",
+    displayItem: "Clk",
+    index: "18",
+    addable: "Sword,Axe, Scythe,Hammer,"
+  },
+  {
+    typeId: "minecraft:soul_sand",
+    weapon: "soul",
+    displayItem: "Sou",
+    index: "19",
+    addable: "Sword,Axe, Mace[Addons] "
   }
 ];
 
@@ -231,7 +252,12 @@ var WEAPON_ABILITIES = [
   { weaponTag: "raid", abilityLore: "\xA7r\xA7d[Passive] Extra Damage To Illager Type Mobs", abilityIndex: 0 },
   { weaponTag: "raid", abilityLore: "\xA7r\xA7d[Active] Curse Entities Around", abilityIndex: 1 },
   { weaponTag: "raid", abilityLore: "\xA7r\xA7d[On-Hit] Curse The Enemy", abilityIndex: 2 },
-  { weaponTag: "raid", abilityLore: "\xA7r\xA7d[On-Hurt] Curse The Attacker", abilityIndex: 3 }
+  { weaponTag: "raid", abilityLore: "\xA7r\xA7d[On-Hurt] Curse The Attacker", abilityIndex: 3 },
+  // SPORE
+  { weaponTag: "spore", abilityLore: "\xA7r\xA7d[Passive] Increased Damage While Poisoned", abilityIndex: 0 },
+  { weaponTag: "spore", abilityLore: "\xA7r\xA7d[Active] Turn Poison Into Pleasure", abilityIndex: 1 },
+  { weaponTag: "spore", abilityLore: "\xA7r\xA7d[On-Hit] Poison The Enemy", abilityIndex: 2 },
+  { weaponTag: "spore", abilityLore: "\xA7r\xA7d[On-Hurt] AoE Poison Where you are hurt", abilityIndex: 3 }
 ];
 
 // scripts/weapon_combiner.ts
@@ -357,7 +383,7 @@ var WeaponCombiner = class {
               });
               entitiesAbove.forEach((entity) => {
                 let index = entity.getTags()[0];
-                if (playerHeld?.typeId.split(":")[1].split("_")[0] == abilityWeapon.weapon && index == abilityWeapon.index && playerHeld?.typeId.split(":")[0] == "bey") {
+                if (abilityWeapon && playerHeld?.typeId.split(":")[1].split("_")[0] == abilityWeapon.weapon && index == abilityWeapon.index && playerHeld?.typeId.split(":")[0] == "bey") {
                   let customTag = playerHeld.typeId.split(":")[1].split("_")[0];
                   const inventory = player.getComponent("minecraft:inventory").container;
                   const selectedSlotIndex = player.selectedSlotIndex;
@@ -561,6 +587,11 @@ function weapon_passive() {
     if (player.typeId != "minecraft:player")
       return;
     switch (true) {
+      case (currentLore && currentLore.some((line) => line === "\xA7r\xA7d[Passive] Increased Damage While Poisoned")):
+        if (player.getEffect("minecraft:wither") || player.getEffect("minecraft:poison") || player.getEffect("fatal_poison")) {
+          hurtEntity.applyDamage(7, { cause: Minecraft2.EntityDamageCause.suicide });
+        }
+        break;
       case (currentLore && currentLore.some((line) => line === "\xA7r\xA7d[Passive] Extra Damage To Illager Type Mobs")):
         const ILLAGER_MOBS = [
           "minecraft:pillager",
@@ -664,6 +695,10 @@ function weapon_onhit() {
     let currentLore = playerHeld.getLore();
     if (onHitCooldown === 0) {
       switch (true) {
+        case (currentLore && currentLore.some((line) => line === "\xA7r\xA7d[On-Hit] Poison The Enemy")):
+          hurtEntity.addEffect(`poison`, 60, { amplifier: 2 });
+          player.setDynamicProperty(`on_hit_cooldown`, onHitCooldown + 1);
+          break;
         case (currentLore && currentLore.some((line) => line === "\xA7r\xA7d[On-Hit] WEAK Foes On Hit")):
           hurtEntity.addEffect(`weakness`, 60, { amplifier: 4 });
           Minecraft3.world.playSound(`break.amethyst_block`, hurtEntity.location);
@@ -830,6 +865,17 @@ function weapon_active() {
       return;
     if (weaponInteract === 0) {
       switch (true) {
+        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Turn Poison Into Pleasure"):
+          if (player.getEffect("minecraft:wither") || player.getEffect("minecraft:poison") || player.getEffect("fatal_poison")) {
+            player.addEffect(`regeneration`, 200, { amplifier: 2 });
+            player.runCommand(`/effect @s wither 0 0`);
+            player.runCommand(`/effect @s poison 0 0`);
+            player.runCommand(`/effect @s fatal_poison 0 0`);
+            player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
+          } else {
+            player.runCommand(`/tellraw @p {"rawtext":[{"text":"\xA72You dont have \xA7dPoison or Wither Effect"}]}`);
+          }
+          break;
         case currentLore.some((line) => line === "\xA7r\xA7d[Active] Interact To Get A HEALTH BOOST"):
           player.addEffect("absorption", 80, { amplifier: 3 });
           player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
@@ -1016,7 +1062,15 @@ function weapon_onhurt() {
     if (!currentLore)
       return;
     switch (true) {
-      case (currentLore.some((line) => line === "\xA7r\xA7d[On-Hurt] AoE WEAKNESS On Hurt") && onHurtCooldown === 0):
+      case (currentLore.some((line) => line === "\xA7r\xA7d[On-Hurt] AoE Poison Where you are hurt") && onHurtCooldown === 0):
+        player.dimension.spawnEntity("bey:radius_entity", player.location);
+        player.dimension.getEntities({ maxDistance: 3, location: player.location }).forEach((entity) => {
+          if (entity.nameTag != player.nameTag) {
+            entity.addEffect(`poison`, 60, { amplifier: 2 });
+          }
+        });
+        player.setDynamicProperty("on_hurt_cooldown", 300);
+        break;
         player.dimension.spawnEntity("bey:radius_entity", player.location);
         player.dimension.getEntities({ maxDistance: 3, location: player.location }).forEach((entity) => {
           if (entity.nameTag != player.nameTag) {
