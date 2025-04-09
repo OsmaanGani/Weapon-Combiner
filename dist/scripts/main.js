@@ -141,14 +141,14 @@ var COMBINED_WEAPONS = [
     weapon: "clock",
     displayItem: "Clk",
     index: "18",
-    addable: "Sword,Axe, Scythe,Hammer,"
+    addable: "Sword, Scythe, Hammer"
   },
   {
     typeId: "minecraft:soul_sand",
     weapon: "soul",
     displayItem: "Sou",
     index: "19",
-    addable: "Sword,Axe, Mace[Addons] "
+    addable: "Sword, Scythe, Mace[Addons]"
   }
 ];
 
@@ -257,7 +257,12 @@ var WEAPON_ABILITIES = [
   { weaponTag: "spore", abilityLore: "\xA7r\xA7d[Passive] Increased Damage While Poisoned", abilityIndex: 0 },
   { weaponTag: "spore", abilityLore: "\xA7r\xA7d[Active] Turn Poison Into Pleasure", abilityIndex: 1 },
   { weaponTag: "spore", abilityLore: "\xA7r\xA7d[On-Hit] Poison The Enemy", abilityIndex: 2 },
-  { weaponTag: "spore", abilityLore: "\xA7r\xA7d[On-Hurt] AoE Poison Where you are hurt", abilityIndex: 3 }
+  { weaponTag: "spore", abilityLore: "\xA7r\xA7d[On-Hurt] AoE Poison Where you are hurt", abilityIndex: 3 },
+  // SOUL
+  { weaponTag: "soul", abilityLore: "\xA7r\xA7d[Passive] Drop SOULS from defeated enemies", abilityIndex: 0 },
+  { weaponTag: "soul", abilityLore: "\xA7r\xA7d[Active] Interact To UNLEASH Stored SOULS as HEALTH", abilityIndex: 1 },
+  { weaponTag: "soul", abilityLore: "\xA7r\xA7d[On-Hit] Steal A PORTION of Enemy Health", abilityIndex: 2 },
+  { weaponTag: "soul", abilityLore: "\xA7r\xA7d[On-Hurt] Drop SOULS from getting hurt", abilityIndex: 3 }
 ];
 
 // scripts/weapon_combiner.ts

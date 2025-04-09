@@ -611,6 +611,66 @@
     },
     "bey_spore_nsc": {
       "textures": "textures/items/spore_netherite_scythe"
+    },
+
+    "bey_clock_ds": {
+      "textures": "textures/items/clock_ds"
+    },
+    "bey_clock_is": {
+      "textures": "textures/items/clock_is"
+    },
+    "bey_clock_ns": {
+      "textures": "textures/items/clock_ns"
+    },
+
+    "bey_clock_dsc": {
+      "textures": "textures/items/clock_dsc"
+    },
+    "bey_clock_isc": {
+      "textures": "textures/items/clock_isc"
+    },
+    "bey_clock_nsc": {
+      "textures": "textures/items/clock_nsc"
+    },
+
+    "bey_clock_dh": {
+      "textures": "textures/items/clock_dh"
+    },
+    "bey_clock_ih": {
+      "textures": "textures/items/clock_ih"
+    },
+    "bey_clock_nh": {
+      "textures": "textures/items/clock_nh"
+    },
+
+    "bey_soul_dh": {
+      "textures": "textures/items/soul_dh"
+    },
+    "bey_soul_ih": {
+      "textures": "textures/items/soul_ih"
+    },
+    "bey_soul_nh": {
+      "textures": "textures/items/soul_nh"
+    },
+
+    "bey_soul_ds": {
+      "textures": "textures/items/soul_ds"
+    },
+    "bey_soul_is": {
+      "textures": "textures/items/soul_is"
+    },
+    "bey_soul_ns": {
+      "textures": "textures/items/soul_ns"
+    },
+
+    "bey_soul_dsc": {
+      "textures": "textures/items/soul_dsc"
+    },
+    "bey_soul_isc": {
+      "textures": "textures/items/soul_isc"
+    },
+    "bey_soul_nsc": {
+      "textures": "textures/items/soul_nsc"
     }
   }
 }

@@ -137,13 +137,13 @@ export const COMBINED_WEAPONS = [
     weapon: "clock",
     displayItem: "Clk",
     index: "18",
-    addable: "Sword,Axe, Scythe,Hammer,",
+    addable: "Sword, Scythe, Hammer",
   },
   {
     typeId: "minecraft:soul_sand",
     weapon: "soul",
     displayItem: "Sou",
     index: "19",
-    addable: "Sword,Axe, Mace[Addons] ",
+    addable: "Sword, Scythe, Mace[Addons]",
   },
 ];
