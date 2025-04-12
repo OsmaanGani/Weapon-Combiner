@@ -114,6 +114,14 @@ export function weapon_passive() {
           case currentLore && currentLore.some((line: string) => line === "§r§d[Passive] SPEED buff When Holding"):
             player.addEffect(`speed`, 20, { amplifier: 2 });
             break;
+          case currentLore &&
+            currentLore.some((line: string) => line === "§r§d[Passive] SLOW Nearby Enemies Over Time"):
+            player.dimension.getEntities({ maxDistance: 4, location: player.location }).forEach((enity) => {
+              if (enity.nameTag != player.name) {
+                enity.addEffect(`slowness`, 8, { amplifier: 0 });
+              }
+            });
+            break;
         }
       }
       if (typeof passiveCooldown == `number` && typeof passiveSpeed == `number` && typeof passivekncok == `number`) {
@@ -198,6 +206,28 @@ export function weapon_passive() {
 
         if (hurtEntity && ILLAGER_MOBS.includes(hurtEntity.typeId)) {
           hurtEntity.applyDamage(6, { cause: Minecraft.EntityDamageCause.suicide });
+        }
+        break;
+    }
+  });
+
+  Minecraft.world.afterEvents.entityDie.subscribe((event) => {
+    let player = event.damageSource.damagingEntity;
+    let deadEntity = event.deadEntity;
+
+    if (player == undefined) return;
+
+    let playerHeld = (player.getComponent(`equippable`) as Minecraft.EntityEquippableComponent).getEquipment(
+      Minecraft.EquipmentSlot.Mainhand
+    );
+    if (playerHeld == undefined) return;
+    let currentLore = playerHeld.getLore();
+
+    switch (true) {
+      case currentLore && currentLore.some((line: string) => line === "§r§d[Passive] Drop SOULS from defeated enemies"):
+        const item = new Minecraft.ItemStack(`beyond:soul`, 1);
+        if (Math.random() <= 0.5) {
+          deadEntity.dimension.spawnItem(item, deadEntity.location);
         }
         break;
     }

@@ -258,6 +258,11 @@ var WEAPON_ABILITIES = [
   { weaponTag: "spore", abilityLore: "\xA7r\xA7d[Active] Turn Poison Into Pleasure", abilityIndex: 1 },
   { weaponTag: "spore", abilityLore: "\xA7r\xA7d[On-Hit] Poison The Enemy", abilityIndex: 2 },
   { weaponTag: "spore", abilityLore: "\xA7r\xA7d[On-Hurt] AoE Poison Where you are hurt", abilityIndex: 3 },
+  // CLOCK
+  { weaponTag: "clock", abilityLore: "\xA7r\xA7d[Passive] SLOW Nearby Enemies Over Time", abilityIndex: 0 },
+  { weaponTag: "clock", abilityLore: "\xA7r\xA7d[Active] Interact To Freeze Entities Briefly", abilityIndex: 1 },
+  { weaponTag: "clock", abilityLore: "\xA7r\xA7d[On-Hit] Infect Hurt With Weakness", abilityIndex: 2 },
+  { weaponTag: "clock", abilityLore: "\xA7r\xA7d[On-Hurt] Rewind A Portion Of Taken Damage", abilityIndex: 3 },
   // SOUL
   { weaponTag: "soul", abilityLore: "\xA7r\xA7d[Passive] Drop SOULS from defeated enemies", abilityIndex: 0 },
   { weaponTag: "soul", abilityLore: "\xA7r\xA7d[Active] Interact To UNLEASH Stored SOULS as HEALTH", abilityIndex: 1 },
@@ -533,6 +538,13 @@ function weapon_passive() {
           case (currentLore && currentLore.some((line) => line === "\xA7r\xA7d[Passive] SPEED buff When Holding")):
             player.addEffect(`speed`, 20, { amplifier: 2 });
             break;
+          case (currentLore && currentLore.some((line) => line === "\xA7r\xA7d[Passive] SLOW Nearby Enemies Over Time")):
+            player.dimension.getEntities({ maxDistance: 4, location: player.location }).forEach((enity) => {
+              if (enity.nameTag != player.name) {
+                enity.addEffect(`slowness`, 8, { amplifier: 0 });
+              }
+            });
+            break;
         }
       }
       if (typeof passiveCooldown == `number` && typeof passiveSpeed == `number` && typeof passivekncok == `number`) {
@@ -607,6 +619,26 @@ function weapon_passive() {
         ];
         if (hurtEntity && ILLAGER_MOBS.includes(hurtEntity.typeId)) {
           hurtEntity.applyDamage(6, { cause: Minecraft2.EntityDamageCause.suicide });
+        }
+        break;
+    }
+  });
+  Minecraft2.world.afterEvents.entityDie.subscribe((event) => {
+    let player = event.damageSource.damagingEntity;
+    let deadEntity = event.deadEntity;
+    if (player == void 0)
+      return;
+    let playerHeld = player.getComponent(`equippable`).getEquipment(
+      Minecraft2.EquipmentSlot.Mainhand
+    );
+    if (playerHeld == void 0)
+      return;
+    let currentLore = playerHeld.getLore();
+    switch (true) {
+      case (currentLore && currentLore.some((line) => line === "\xA7r\xA7d[Passive] Drop SOULS from defeated enemies")):
+        const item = new Minecraft2.ItemStack(`beyond:soul`, 1);
+        if (Math.random() <= 0.5) {
+          deadEntity.dimension.spawnItem(item, deadEntity.location);
         }
         break;
     }
@@ -700,6 +732,24 @@ function weapon_onhit() {
     let currentLore = playerHeld.getLore();
     if (onHitCooldown === 0) {
       switch (true) {
+        case (currentLore && currentLore.some((line) => line === "\xA7r\xA7d[On-Hit] Steal A PORTION of Enemy Health")):
+          let hurthealth = hurtEntity.getComponent(`health`);
+          if (hurthealth) {
+            let damageDone = hurthealth.defaultValue - hurthealth.currentValue;
+            if (damageDone > 0) {
+              let healAmount = damageDone * 0.2;
+              let playerHealth = player.getComponent(`health`);
+              if (playerHealth) {
+                playerHealth.setCurrentValue(Math.min(playerHealth.currentValue + healAmount));
+              }
+            }
+          }
+          player.setDynamicProperty(`on_hit_cooldown`, onHitCooldown + 1);
+          break;
+        case (currentLore && currentLore.some((line) => line === "\xA7r\xA7d[On-Hit] Infect Hurt With Weakness")):
+          hurtEntity.addEffect(`weakness`, 60, { amplifier: 2 });
+          player.setDynamicProperty(`on_hit_cooldown`, onHitCooldown + 1);
+          break;
         case (currentLore && currentLore.some((line) => line === "\xA7r\xA7d[On-Hit] Poison The Enemy")):
           hurtEntity.addEffect(`poison`, 60, { amplifier: 2 });
           player.setDynamicProperty(`on_hit_cooldown`, onHitCooldown + 1);
@@ -868,8 +918,42 @@ function weapon_active() {
     }
     if (!currentLore)
       return;
+    if (event.itemStack.typeId == `beyond:soul`) {
+      player.addEffect(`saturation`, 3, { amplifier: 2 });
+      player.runCommand(`/clear @s beyond:soul 0 1`);
+    }
     if (weaponInteract === 0) {
       switch (true) {
+        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Interact To UNLEASH Stored SOULS as HEALTH"):
+          let inv = player.getComponent("inventory");
+          let itemCount = 0;
+          if (inv.container == void 0)
+            return;
+          for (let slot = 0; slot < inv.container.size; slot++) {
+            const item = inv.container.getItem(slot);
+            if (item && item.typeId === "beyond:soul") {
+              itemCount += item.amount;
+            }
+          }
+          if (itemCount > 0) {
+            let playerHealth = player.getComponent("health");
+            playerHealth.setCurrentValue(playerHealth.currentValue + Math.floor(itemCount * 2.5));
+            player.runCommand(`/clear @s beyond:soul 0 ${itemCount}`);
+            Minecraft4.world.playSound(`beacon.activate`, player.location);
+            player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
+          } else {
+            player.runCommand(`/tellraw @p {"rawtext":[{"text":"\xA7l\xA74You dont have \xA7dSOULS"}]}`);
+          }
+          break;
+        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Interact To Freeze Entities Briefly"):
+          player.dimension.getEntities({ maxDistance: 4, location: player.location }).forEach((entity) => {
+            if (entity.nameTag != player.name) {
+              entity.addEffect(`slowness`, 100, { amplifier: 3 });
+              player.dimension.spawnEntity("bey:radius_entity", player.location);
+            }
+          });
+          player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
+          break;
         case currentLore.some((line) => line === "\xA7r\xA7d[Active] Turn Poison Into Pleasure"):
           if (player.getEffect("minecraft:wither") || player.getEffect("minecraft:poison") || player.getEffect("fatal_poison")) {
             player.addEffect(`regeneration`, 200, { amplifier: 2 });
@@ -880,6 +964,7 @@ function weapon_active() {
           } else {
             player.runCommand(`/tellraw @p {"rawtext":[{"text":"\xA72You dont have \xA7dPoison or Wither Effect"}]}`);
           }
+          player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
           break;
         case currentLore.some((line) => line === "\xA7r\xA7d[Active] Interact To Get A HEALTH BOOST"):
           player.addEffect("absorption", 80, { amplifier: 3 });
@@ -1052,6 +1137,46 @@ function weapon_onhurt() {
       }
     });
   });
+  Minecraft5.world.afterEvents.entityHurt.subscribe((event) => {
+    let damage = event.damage;
+    let player = event.hurtEntity;
+    if (player == void 0)
+      return;
+    if (player.typeId !== "minecraft:player")
+      return;
+    let onHurtCooldown = player.getDynamicProperty("on_hurt_cooldown") || 0;
+    let playerHeld = player.getComponent(`equippable`).getEquipment(
+      Minecraft5.EquipmentSlot.Mainhand
+    );
+    if (playerHeld == void 0)
+      return;
+    let currentLore = playerHeld.getLore();
+    if (!currentLore)
+      return;
+    switch (true) {
+      case (currentLore.some((line) => line === "\xA7r\xA7d[On-Hurt] Rewind A Portion Of Taken Damage") && onHurtCooldown === 0): {
+        let playerHealth = player.getComponent("health");
+        const damageToAdd = [];
+        let remaining = damage;
+        while (remaining > 0) {
+          if (remaining >= 2) {
+            damageToAdd.push(2);
+            remaining -= 2;
+          } else {
+            damageToAdd.push(remaining);
+            remaining = 0;
+          }
+        }
+        damageToAdd.forEach((damage2, index) => {
+          Minecraft5.system.runTimeout(() => {
+            playerHealth.setCurrentValue(playerHealth.currentValue + damage2);
+          }, 15 * index);
+        });
+        player.setDynamicProperty("on_hurt_cooldown", 1);
+        break;
+      }
+    }
+  });
   Minecraft5.world.afterEvents.entityHitEntity.subscribe((event) => {
     let player = event.hitEntity;
     if (!player || player.typeId !== "minecraft:player")
@@ -1067,6 +1192,12 @@ function weapon_onhurt() {
     if (!currentLore)
       return;
     switch (true) {
+      case (currentLore.some((line) => line === "\xA7r\xA7d[On-Hurt] Drop SOULS from getting hurt") && onHurtCooldown === 0):
+        let newItem = new Minecraft5.ItemStack("bey:soiled_soul", 1);
+        if (Math.random() <= 0.2) {
+          player.dimension.spawnItem(newItem, player.location);
+        }
+        break;
       case (currentLore.some((line) => line === "\xA7r\xA7d[On-Hurt] AoE Poison Where you are hurt") && onHurtCooldown === 0):
         player.dimension.spawnEntity("bey:radius_entity", player.location);
         player.dimension.getEntities({ maxDistance: 3, location: player.location }).forEach((entity) => {
@@ -1075,7 +1206,6 @@ function weapon_onhurt() {
           }
         });
         player.setDynamicProperty("on_hurt_cooldown", 300);
-        break;
         player.dimension.spawnEntity("bey:radius_entity", player.location);
         player.dimension.getEntities({ maxDistance: 3, location: player.location }).forEach((entity) => {
           if (entity.nameTag != player.nameTag) {

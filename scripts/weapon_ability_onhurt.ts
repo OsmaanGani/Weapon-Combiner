@@ -18,6 +18,53 @@ export function weapon_onhurt() {
     });
   });
 
+  Minecraft.world.afterEvents.entityHurt.subscribe((event) => {
+    let damage = event.damage;
+    let player = event.hurtEntity;
+
+    if (player == undefined) return;
+    if (player.typeId !== "minecraft:player") return;
+
+    let onHurtCooldown = player.getDynamicProperty("on_hurt_cooldown") || 0;
+
+    let playerHeld = (player.getComponent(`equippable`) as Minecraft.EntityEquippableComponent).getEquipment(
+      Minecraft.EquipmentSlot.Mainhand
+    );
+    if (playerHeld == undefined) return;
+
+    let currentLore = playerHeld.getLore();
+    if (!currentLore) return;
+
+    switch (true) {
+      case currentLore.some((line: string) => line === "§r§d[On-Hurt] Rewind A Portion Of Taken Damage") &&
+        onHurtCooldown === 0: {
+        let playerHealth = player.getComponent("health") as Minecraft.EntityHealthComponent;
+        const damageToAdd = [];
+
+        let remaining = damage;
+        while (remaining > 0) {
+          if (remaining >= 2) {
+            damageToAdd.push(2);
+            remaining -= 2;
+          } else {
+            damageToAdd.push(remaining);
+            remaining = 0;
+          }
+        }
+
+        damageToAdd.forEach((damage, index) => {
+          Minecraft.system.runTimeout(() => {
+            playerHealth.setCurrentValue(playerHealth.currentValue + damage);
+          }, 15 * index);
+        });
+
+        player.setDynamicProperty("on_hurt_cooldown", 1);
+
+        break;
+      }
+    }
+  });
+
   Minecraft.world.afterEvents.entityHitEntity.subscribe((event) => {
     let player = event.hitEntity;
     if (!player || player.typeId !== "minecraft:player") return;
@@ -34,6 +81,14 @@ export function weapon_onhurt() {
     if (!currentLore) return;
 
     switch (true) {
+      case currentLore.some((line: string) => line === "§r§d[On-Hurt] Drop SOULS from getting hurt") &&
+        onHurtCooldown === 0:
+        let newItem = new Minecraft.ItemStack("bey:soiled_soul", 1);
+        if (Math.random() <= 0.2) {
+          player.dimension.spawnItem(newItem, player.location);
+        }
+        break;
+
       case currentLore.some((line: string) => line === "§r§d[On-Hurt] AoE Poison Where you are hurt") &&
         onHurtCooldown === 0:
         player.dimension.spawnEntity("bey:radius_entity", player.location);
@@ -45,7 +100,6 @@ export function weapon_onhurt() {
         });
 
         player.setDynamicProperty("on_hurt_cooldown", 300);
-        break;
         player.dimension.spawnEntity("bey:radius_entity", player.location);
 
         player.dimension.getEntities({ maxDistance: 3, location: player.location }).forEach((entity) => {

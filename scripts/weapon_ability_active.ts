@@ -45,8 +45,43 @@ export function weapon_active() {
 
     if (!currentLore) return;
 
+    if (event.itemStack.typeId == `beyond:soul`) {
+      player.addEffect(`saturation`, 3, { amplifier: 2 });
+      player.runCommand(`/clear @s beyond:soul 0 1`);
+    }
+
     if (weaponInteract === 0) {
       switch (true) {
+        case currentLore.some((line) => line === "§r§d[Active] Interact To UNLEASH Stored SOULS as HEALTH"):
+          let inv = player.getComponent("inventory") as Minecraft.EntityInventoryComponent;
+          let itemCount = 0;
+          if (inv.container == undefined) return;
+          for (let slot = 0; slot < inv.container.size; slot++) {
+            const item = inv.container.getItem(slot);
+            if (item && item.typeId === "beyond:soul") {
+              itemCount += item.amount;
+            }
+          }
+          if (itemCount > 0) {
+            let playerHealth = player.getComponent("health") as Minecraft.EntityHealthComponent;
+            playerHealth.setCurrentValue(playerHealth.currentValue + Math.floor(itemCount * 2.5));
+            player.runCommand(`/clear @s beyond:soul 0 ${itemCount}`);
+            Minecraft.world.playSound(`beacon.activate`, player.location);
+            player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
+          } else {
+            player.runCommand(`/tellraw @p {"rawtext":[{"text":"§l§4You dont have §dSOULS"}]}`);
+          }
+          break;
+
+        case currentLore.some((line) => line === "§r§d[Active] Interact To Freeze Entities Briefly"):
+          player.dimension.getEntities({ maxDistance: 4, location: player.location }).forEach((entity) => {
+            if (entity.nameTag != player.name) {
+              entity.addEffect(`slowness`, 100, { amplifier: 3 });
+              player.dimension.spawnEntity("bey:radius_entity", player.location);
+            }
+          });
+          player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
+          break;
         case currentLore.some((line) => line === "§r§d[Active] Turn Poison Into Pleasure"):
           if (
             player.getEffect("minecraft:wither") ||
@@ -61,6 +96,7 @@ export function weapon_active() {
           } else {
             player.runCommand(`/tellraw @p {"rawtext":[{"text":"§2You dont have §dPoison or Wither Effect"}]}`);
           }
+          player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
           break;
 
         case currentLore.some((line) => line === "§r§d[Active] Interact To Get A HEALTH BOOST"):

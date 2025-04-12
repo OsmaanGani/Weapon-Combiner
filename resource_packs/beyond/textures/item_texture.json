@@ -671,6 +671,9 @@
     },
     "bey_soul_nsc": {
       "textures": "textures/items/soul_nsc"
+    },
+    "bey_soul": {
+      "textures": "textures/items/soul"
     }
   }
 }
