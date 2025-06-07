@@ -877,252 +877,11 @@ var Vector2 = class {
   }
 };
 
-// scripts/weapon_ability_active.ts
+// scripts/weapon_ability_onhurt.ts
 import * as Minecraft4 from "@minecraft/server";
-function weapon_active() {
+function weapon_onhurt() {
   Minecraft4.system.runInterval(() => {
     Minecraft4.world.getAllPlayers().forEach((player) => {
-      let weaponInteract = player.getDynamicProperty("interact_cooldown") ?? 0;
-      if (typeof weaponInteract == `number`) {
-        if (weaponInteract !== 0) {
-          player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
-        }
-        if (weaponInteract > 600) {
-          player.setDynamicProperty("interact_cooldown", 0);
-        }
-      }
-      player.dimension.getEntities().forEach((entity) => {
-        if (entity.typeId === "bey:radius_entity") {
-          Minecraft4.system.runTimeout(() => {
-            entity.runCommand(`/tp @s ~ 100 ~`);
-          }, 17);
-          Minecraft4.system.runTimeout(() => {
-            entity.runCommand(`/kill @s`);
-          }, 20);
-        }
-      });
-    });
-  });
-  Minecraft4.world.afterEvents.itemUse.subscribe((event) => {
-    let player = event.source;
-    let { x, y, z } = player.getViewDirection();
-    let playerHeld = player.getComponent(`equippable`).getEquipment(
-      Minecraft4.EquipmentSlot.Mainhand
-    );
-    if (playerHeld === void 0)
-      return;
-    let currentLore = playerHeld.getLore();
-    let weaponInteract = player.getDynamicProperty("interact_cooldown");
-    if (!weaponInteract) {
-      player.setDynamicProperty("interact_cooldown", 0);
-    }
-    if (!currentLore)
-      return;
-    if (event.itemStack.typeId == `beyond:soul`) {
-      player.addEffect(`saturation`, 3, { amplifier: 2 });
-      player.runCommand(`/clear @s beyond:soul 0 1`);
-    }
-    if (weaponInteract === 0) {
-      switch (true) {
-        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Interact To UNLEASH Stored SOULS as HEALTH"):
-          let inv = player.getComponent("inventory");
-          let itemCount = 0;
-          if (inv.container == void 0)
-            return;
-          for (let slot = 0; slot < inv.container.size; slot++) {
-            const item = inv.container.getItem(slot);
-            if (item && item.typeId === "beyond:soul") {
-              itemCount += item.amount;
-            }
-          }
-          if (itemCount > 0) {
-            let playerHealth = player.getComponent("health");
-            playerHealth.setCurrentValue(playerHealth.currentValue + Math.floor(itemCount * 2.5));
-            player.runCommand(`/clear @s beyond:soul 0 ${itemCount}`);
-            Minecraft4.world.playSound(`beacon.activate`, player.location);
-            player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
-          } else {
-            player.runCommand(`/tellraw @p {"rawtext":[{"text":"\xA7l\xA74You dont have \xA7dSOULS"}]}`);
-          }
-          break;
-        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Interact To Freeze Entities Briefly"):
-          player.dimension.getEntities({ maxDistance: 4, location: player.location }).forEach((entity) => {
-            if (entity.nameTag != player.name) {
-              entity.addEffect(`slowness`, 100, { amplifier: 3 });
-              player.dimension.spawnEntity("bey:radius_entity", player.location);
-            }
-          });
-          player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
-          break;
-        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Turn Poison Into Pleasure"):
-          if (player.getEffect("minecraft:wither") || player.getEffect("minecraft:poison") || player.getEffect("fatal_poison")) {
-            player.addEffect(`regeneration`, 200, { amplifier: 2 });
-            player.runCommand(`/effect @s wither 0 0`);
-            player.runCommand(`/effect @s poison 0 0`);
-            player.runCommand(`/effect @s fatal_poison 0 0`);
-            player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
-          } else {
-            player.runCommand(`/tellraw @p {"rawtext":[{"text":"\xA72You dont have \xA7dPoison or Wither Effect"}]}`);
-          }
-          player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
-          break;
-        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Interact To Get A HEALTH BOOST"):
-          player.addEffect("absorption", 80, { amplifier: 3 });
-          player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
-          break;
-        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Interact To Get A COMBINED BUFF"):
-          player.addEffect("speed", 100, { amplifier: 2 });
-          player.addEffect("regeneration", 100, { amplifier: 2 });
-          player.addEffect("jump_boost", 100, { amplifier: 2 });
-          player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
-          break;
-        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Interact To Go INVISIBLE for a while"):
-          player.addEffect("invisibility", 80, { amplifier: 1 });
-          player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
-          break;
-        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Interact To Get Buff For a SACRIFICE"):
-          player.runCommand(`/damage @s 6`);
-          player.addEffect("speed", 100, { amplifier: 2 });
-          player.addEffect("strength", 100, { amplifier: 0 });
-          player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
-          break;
-        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Interact To Summon WARDEN SPIRITS"):
-          const replaceableBlocks = ["grass_block", "stone", "andesite", "granite", "diorite", "gravel"];
-          for (let i = 1; i <= 18; i++) {
-            player.playSound("mob.warden.attack", { volume: 10, pitch: 0.9, location: player.location });
-            player.runCommand(`execute at @s positioned ^ ^1.5 ^${i * 2} run particle minecraft:sonic_explosion ~~~`);
-            Minecraft4.system.runTimeout(() => {
-              player.getEntitiesFromViewDirection({ maxDistance: 28 }).forEach((entity) => {
-                let viewDir = entity.entity.getViewDirection();
-                entity.entity.applyKnockback(viewDir.x, viewDir.y, 0.6, 0.6);
-                entity.entity.runCommand(`/damage @s 15 entity_attack entity ${player.nameTag}`);
-                for (let x2 = -3; x2 <= 3; x2++) {
-                  for (let z2 = -3; z2 <= 3; z2++) {
-                    if (Math.random() < 0.06) {
-                      replaceableBlocks.forEach((blockType) => {
-                        entity.entity.runCommand(
-                          `fill ~${x2} ~-4 ~${z2} ~${x2} ~3 ~${z2} minecraft:sculk replace minecraft:${blockType}`
-                        );
-                        if (Math.random() < 5e-3) {
-                          entity.entity.runCommand(
-                            `fill ~${x2} ~-2 ~${z2} ~${x2} ~ ~${z2} minecraft:sculk_sensor replace air`
-                          );
-                        }
-                        if (Math.random() < 5e-3) {
-                          entity.entity.runCommand(
-                            `fill ~${x2} ~-2 ~${z2} ~${x2} ~ ~${z2} minecraft:sculk_catalyst replace air`
-                          );
-                        }
-                        if (Math.random() < 2e-3) {
-                          entity.entity.runCommand(
-                            `fill ~${x2} ~-2 ~${z2} ~${x2} ~ ~${z2} minecraft:sculk_shrieker replace air`
-                          );
-                        }
-                      });
-                    }
-                  }
-                }
-              });
-            });
-          }
-          player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
-          break;
-        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Interact To DASH forward"):
-          player.applyKnockback(x, z, 3, 0.1);
-          player.setDynamicProperty("interact_cooldown", weaponInteract + 400);
-          break;
-        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Interact To BOUNCE foes"):
-          player.dimension.getEntities({ maxDistance: 4, location: player.location }).forEach((entity) => {
-            if (entity.nameTag !== player.nameTag && entity.typeId !== "minecraft:wolf" && entity.typeId !== "minecraft:cat") {
-              player.dimension.spawnEntity("bey:radius_entity", player.location);
-              entity.applyKnockback(x, y, 0, 1.3);
-            }
-            player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
-          });
-          break;
-        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Interact To Summon DIVINE LIGHTNING"):
-          player.dimension.getEntities({ maxDistance: 8, location: player.location }).forEach((entity) => {
-            if (entity.nameTag !== player.nameTag && entity.typeId !== "minecraft:wolf" && entity.typeId !== "minecraft:cat") {
-              player.dimension.spawnEntity("bey:radius_entity", player.location);
-              entity.dimension.spawnEntity("lightning_bolt", entity.location);
-            }
-            player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
-          });
-          break;
-        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Interact To Summon FIREBALLS"):
-          player.dimension.getEntities({ maxDistance: 5, location: player.location }).forEach((entity) => {
-            player.dimension.spawnEntity("bey:radius_entity", player.location);
-            if (entity.nameTag !== player.nameTag && entity.typeId !== "minecraft:wolf" && entity.typeId !== "minecraft:cat") {
-              entity.setOnFire(3);
-            }
-            player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
-          });
-          break;
-        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Interact To Double Your JUMP HEIGHT"):
-          if (!player.isOnGround) {
-            player.applyKnockback(x, y, 0, 0.9);
-            player.setDynamicProperty("interact_cooldown", weaponInteract + 500);
-          }
-          break;
-        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Interact To BOOST Mining Speed"):
-          player.addEffect("haste", 300, { amplifier: 2 });
-          player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
-          break;
-        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Interact for WATER BREATHING"):
-          player.addEffect("water_breathing", 300, { amplifier: 2 });
-          player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
-          break;
-        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Interact To Create EXPLOSIONS"):
-          player.dimension.spawnEntity("tnt", player.location);
-          player.onScreenDisplay.setTitle("\xA7l\xA74RUN !!!!!");
-          player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
-          break;
-        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Interact replaces HUNGER for HEALING"):
-          player.addEffect("instant_health", 20, { amplifier: 20 });
-          player.addEffect("hunger", 130, { amplifier: 254 });
-          player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
-          break;
-        case currentLore.some((line) => line === "\xA7r\xA7d[Active] WITHER mobs around you"):
-          player.dimension.getEntities({ maxDistance: 5, location: player.location }).forEach((entity) => {
-            player.dimension.spawnEntity("bey:radius_entity", player.location);
-            if (entity.nameTag !== player.nameTag && entity.typeId !== "minecraft:wolf" && entity.typeId !== "minecraft:cat") {
-              entity.addEffect("wither", 80, { amplifier: 3 });
-            }
-            player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
-          });
-          break;
-        case currentLore.some((line) => line === "\xA7r\xA7d[Active] DASH and set mobs on fire around you"):
-          player.applyKnockback(x, z, 5, 0);
-          Minecraft4.system.runTimeout(() => {
-            player.dimension.getEntities({ maxDistance: 5, location: player.location }).forEach((entity) => {
-              player.dimension.spawnEntity("bey:radius_entity", player.location);
-              if (entity.nameTag !== player.nameTag && entity.typeId !== "minecraft:wolf" && entity.typeId !== "minecraft:cat") {
-                entity.setOnFire(2);
-              }
-              player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
-            });
-          }, 5);
-          break;
-        case currentLore.some((line) => line === "\xA7r\xA7d[Active] Curse Entities Around"):
-          player.dimension.getEntities({ maxDistance: 5, location: player.location }).forEach((entity) => {
-            player.dimension.spawnEntity("bey:radius_entity", player.location);
-            if (entity.nameTag !== player.nameTag && entity.typeId !== "minecraft:wolf" && entity.typeId !== "minecraft:cat") {
-              entity.addTag(`Cursed`);
-              entity.setDynamicProperty(`Cursed`, 1);
-            }
-            player.setDynamicProperty("interact_cooldown", weaponInteract + 1);
-          });
-          break;
-      }
-    }
-  });
-}
-
-// scripts/weapon_ability_onhurt.ts
-import * as Minecraft5 from "@minecraft/server";
-function weapon_onhurt() {
-  Minecraft5.system.runInterval(() => {
-    Minecraft5.world.getAllPlayers().forEach((player) => {
       let onHurtCooldown = player.getDynamicProperty(`on_hurt_cooldown`);
       if (!onHurtCooldown) {
         player.setDynamicProperty(`on_hurt_cooldown`, 0);
@@ -1137,7 +896,7 @@ function weapon_onhurt() {
       }
     });
   });
-  Minecraft5.world.afterEvents.entityHurt.subscribe((event) => {
+  Minecraft4.world.afterEvents.entityHurt.subscribe((event) => {
     let damage = event.damage;
     let player = event.hurtEntity;
     if (player == void 0)
@@ -1146,7 +905,7 @@ function weapon_onhurt() {
       return;
     let onHurtCooldown = player.getDynamicProperty("on_hurt_cooldown") || 0;
     let playerHeld = player.getComponent(`equippable`).getEquipment(
-      Minecraft5.EquipmentSlot.Mainhand
+      Minecraft4.EquipmentSlot.Mainhand
     );
     if (playerHeld == void 0)
       return;
@@ -1168,7 +927,7 @@ function weapon_onhurt() {
           }
         }
         damageToAdd.forEach((damage2, index) => {
-          Minecraft5.system.runTimeout(() => {
+          Minecraft4.system.runTimeout(() => {
             playerHealth.setCurrentValue(playerHealth.currentValue + damage2);
           }, 15 * index);
         });
@@ -1177,14 +936,14 @@ function weapon_onhurt() {
       }
     }
   });
-  Minecraft5.world.afterEvents.entityHitEntity.subscribe((event) => {
+  Minecraft4.world.afterEvents.entityHitEntity.subscribe((event) => {
     let player = event.hitEntity;
     if (!player || player.typeId !== "minecraft:player")
       return;
     let hurtingEntity = event.damagingEntity;
     let onHurtCooldown = player.getDynamicProperty("on_hurt_cooldown") || 0;
     let playerHeld = player.getComponent(`equippable`).getEquipment(
-      Minecraft5.EquipmentSlot.Mainhand
+      Minecraft4.EquipmentSlot.Mainhand
     );
     if (playerHeld == void 0)
       return;
@@ -1193,7 +952,7 @@ function weapon_onhurt() {
       return;
     switch (true) {
       case (currentLore.some((line) => line === "\xA7r\xA7d[On-Hurt] Drop SOULS from getting hurt") && onHurtCooldown === 0):
-        let newItem = new Minecraft5.ItemStack("bey:soiled_soul", 1);
+        let newItem = new Minecraft4.ItemStack("bey:soiled_soul", 1);
         if (Math.random() <= 0.2) {
           player.dimension.spawnItem(newItem, player.location);
         }
@@ -1312,7 +1071,7 @@ function weapon_onhurt() {
         break;
     }
   });
-  Minecraft5.system.afterEvents.scriptEventReceive.subscribe(({ id, sourceEntity: player }) => {
+  Minecraft4.system.afterEvents.scriptEventReceive.subscribe(({ id, sourceEntity: player }) => {
     if (!player || id !== "beyond:knockback")
       return;
     const entities = player.dimension.getEntities({ location: player.location, maxDistance: 6 });
@@ -1354,10 +1113,10 @@ var Vector3 = class {
 };
 
 // scripts/weapon_combiner_cooldown.ts
-import { world as world6, system as system6 } from "@minecraft/server";
+import { world as world5, system as system5 } from "@minecraft/server";
 function weapon_cooldown() {
-  system6.runInterval(() => {
-    world6.getAllPlayers().forEach((player) => {
+  system5.runInterval(() => {
+    world5.getAllPlayers().forEach((player) => {
       const cooldowns = {
         Hurt: { time: Number(player.getDynamicProperty("on_hurt_cooldown") ?? 0), max: 20 },
         Interact: { time: Number(player.getDynamicProperty("interact_cooldown") ?? 0), max: 30 },
@@ -1370,14 +1129,327 @@ function weapon_cooldown() {
 }
 
 // scripts/main.ts
+import { system as system9, world as world9 } from "@minecraft/server";
+
+// scripts/features/activeAbility.ts
+import {
+  world as world6,
+  system as system6,
+  EntityDamageCause as EntityDamageCause3
+} from "@minecraft/server";
+var ActiveAbility = class _ActiveAbility {
+  static run(player, held) {
+    const lore = held.getLore() ?? [];
+    const entry = _ActiveAbility._abilities.find((a) => lore.some((line) => line === a.tag));
+    if (!entry)
+      return;
+    if (!_ActiveAbility._cooldownReady(player))
+      return;
+    entry.exec(player, held);
+    _ActiveAbility._startCooldown(player, entry.cooldown);
+  }
+  static {
+    this._unleashSouls = (p) => {
+      const inv = p.getComponent("inventory");
+      let soulCount = 0;
+      let container = inv.container;
+      if (container) {
+        for (let i = 0; i < container.size; i++) {
+          const item = container.getItem(i);
+          if (item?.typeId === "beyond:soul") {
+            soulCount += item.amount;
+          }
+        }
+      }
+      if (!soulCount) {
+        p.runCommand(`tellraw @s {"rawtext":[{"text":"\xA7l\xA74You don't have \xA7dSOULS"}]}`);
+        return;
+      }
+      const hp = p.getComponent("health");
+      hp.setCurrentValue(Math.min(hp.currentValue + Math.floor(soulCount * 2.5), hp.defaultValue));
+      p.runCommand(`/clear @s beyond:soul 0 1`);
+      world6.playSound("beacon.activate", p.location);
+    };
+  }
+  static {
+    this._freezeEntities = (p) => {
+      p.dimension.getEntities({ location: p.location, maxDistance: 4 }).forEach((e) => {
+        if (e.id == p.id)
+          return;
+        e.addEffect("slowness", 100, { amplifier: 3 });
+        p.dimension.spawnEntity("bey:radius_entity", p.location);
+      });
+    };
+  }
+  static {
+    this._poisonToRegen = (p) => {
+      if (p.getEffect("minecraft:wither") || p.getEffect("minecraft:poison") || p.getEffect("fatal_poison")) {
+        p.addEffect("regeneration", 200, { amplifier: 2 });
+        p.runCommand(`/effect @s wither 0 0`);
+        p.runCommand(`/effect @s poison 0 0`);
+        p.runCommand(`/effect @s fatal_poison 0 0`);
+      } else {
+        p.runCommand(`tellraw @s {"rawtext":[{"text":"\xA72You don't have \xA7dPoison or Wither"}]}`);
+      }
+    };
+  }
+  static _simpleHealthBoost(amplifier) {
+    return (p) => {
+      p.addEffect("absorption", 80, { amplifier });
+      world6.playSound("beacon.power_select", p.location);
+    };
+  }
+  static {
+    this._combinedBuff = (p) => {
+      p.addEffect("regeneration", 200, { amplifier: 2 });
+      p.addEffect("speed", 200, { amplifier: 2 });
+      p.addEffect("jump_boost", 200, { amplifier: 2 });
+    };
+  }
+  static {
+    this._invisibility = (p) => {
+      p.addEffect("invisibility", 80, { amplifier: 1 });
+    };
+  }
+  static {
+    this._selfSacrifice = (p) => {
+      p.applyDamage(6);
+      p.addEffect("speed", 100, { amplifier: 2 });
+      p.addEffect("strength", 100, { amplifier: 0 });
+    };
+  }
+  static {
+    this._wardenSpirits = (p) => {
+      const replaceableBlocks = ["grass_block", "stone", "andesite", "granite", "diorite", "gravel"];
+      p.dimension.playSound(`entity.warden.attack`, p.location);
+      for (let i = 1; i <= 18; i++) {
+        p.dimension.playSound("mob.warden.attack", p.location, { volume: 10, pitch: 0.9 });
+        p.runCommand(`execute at @s positioned ^ ^1.5 ^${i * 2} run particle minecraft:sonic_explosion ~~~`);
+        system6.runTimeout(() => {
+          p.getEntitiesFromViewDirection({ maxDistance: 28 }).forEach((entity) => {
+            const e = entity.entity;
+            const viewDir = e.getViewDirection();
+            e.applyKnockback(viewDir.x, viewDir.y, 0.6, 0.6);
+            e.applyDamage(15, { cause: EntityDamageCause3.selfDestruct });
+            for (let x = -3; x <= 3; x++) {
+              for (let z = -3; z <= 3; z++) {
+                if (Math.random() < 0.06) {
+                  replaceableBlocks.forEach((blockType) => {
+                    e.runCommand(`fill ~${x} ~-4 ~${z} ~${x} ~3 ~${z} minecraft:sculk replace minecraft:${blockType}`);
+                  });
+                  if (Math.random() < 5e-3) {
+                    e.runCommand(`fill ~${x} ~-2 ~${z} ~${x} ~ ~${z} minecraft:sculk_sensor replace air`);
+                  }
+                }
+              }
+            }
+          });
+        });
+      }
+    };
+  }
+  static {
+    this._dashForward = (p) => {
+      let { x, y, z } = p.getViewDirection();
+      p.applyKnockback(x, z, 3, 0.1);
+    };
+  }
+  static {
+    this._bounceFoes = (p) => {
+      p.dimension.getEntities({ location: p.location, maxDistance: 5 }).forEach((entity) => {
+        if (entity.id === p.id)
+          return;
+        let { x, y, z } = entity.location;
+        entity.applyKnockback(x, y, 0, 1.3);
+        p.runCommand(`playsound mob.slime.jump @s ~ ~ ~ 1 1`);
+      });
+    };
+  }
+  static {
+    // Summon DIVINE LIGHTNING: summon lightning at player's look direction
+    this._divineLightning = (p) => {
+      p.dimension.getEntities({ maxDistance: 8, location: p.location }).forEach((entity) => {
+        if (entity.nameTag !== p.nameTag && entity.typeId !== "minecraft:wolf" && entity.typeId !== "minecraft:cat") {
+          p.dimension.spawnEntity("bey:radius_entity", p.location);
+          entity.dimension.spawnEntity("lightning_bolt", entity.location);
+        }
+        p;
+      });
+    };
+  }
+  static {
+    this._summonFireballs = (p) => {
+      p.dimension.getEntities({ maxDistance: 5, location: p.location }).forEach((entity) => {
+        p.dimension.spawnEntity("bey:radius_entity", p.location);
+        if (entity.nameTag !== p.nameTag && entity.typeId !== "minecraft:wolf" && entity.typeId !== "minecraft:cat") {
+          entity.setOnFire(3);
+        }
+      });
+    };
+  }
+  static {
+    this._doubleJump = (p) => {
+      let { x, y, z } = p.location;
+      if (!p.isOnGround) {
+        p.applyKnockback(x, y, 0, 0.9);
+      }
+      p.runCommand(`playsound mob.slime.jump @s ~ ~ ~ 1 1`);
+    };
+  }
+  static {
+    this._miningHaste = (p) => {
+      p.addEffect("haste", 200, { amplifier: 1 });
+      p.runCommand(`playsound random.levelup @s ~ ~ ~ 1 1`);
+    };
+  }
+  static {
+    this._waterBreathing = (p) => {
+      p.addEffect("water_breathing", 200, { amplifier: 0 });
+      p.runCommand(`playsound minecraft:entity.player.levelup @s ~ ~ ~ 1 1`);
+    };
+  }
+  static {
+    this._createExplosions = (p) => {
+      p.dimension.spawnEntity("tnt", p.location);
+      p.onScreenDisplay.setTitle("\xA7l\xA74RUN !!!!!");
+    };
+  }
+  static {
+    this._hungerToHealing = (p) => {
+      p.addEffect("instant_health", 20, { amplifier: 20 });
+      p.addEffect("hunger", 130, { amplifier: 254 });
+    };
+  }
+  static {
+    this._witherAura = (p) => {
+      p.dimension.getEntities({ maxDistance: 5, location: p.location }).forEach((entity) => {
+        p.dimension.spawnEntity("bey:radius_entity", p.location);
+        if (entity.nameTag !== p.nameTag && entity.typeId !== "minecraft:wolf" && entity.typeId !== "minecraft:cat") {
+          entity.addEffect("wither", 80, { amplifier: 3 });
+        }
+      });
+    };
+  }
+  static {
+    this._dashFire = (p) => {
+      const { x, y, z } = p.getViewDirection();
+      p.applyKnockback(x, z, 5, 0);
+      system6.runTimeout(() => {
+        p.dimension.getEntities({ maxDistance: 5, location: p.location }).forEach((entity) => {
+          p.dimension.spawnEntity("bey:radius_entity", p.location);
+          if (entity.nameTag !== p.nameTag && entity.typeId !== "minecraft:wolf" && entity.typeId !== "minecraft:cat") {
+            entity.setOnFire(2);
+          }
+        });
+      }, 5);
+    };
+  }
+  static {
+    this._curseEntities = (p) => {
+      p.dimension.getEntities({ maxDistance: 5, location: p.location }).forEach((entity) => {
+        p.dimension.spawnEntity("bey:radius_entity", p.location);
+        if (entity.id !== p.id && entity.typeId !== "minecraft:wolf" && entity.typeId !== "minecraft:cat") {
+          entity.addTag(`Cursed`);
+          entity.setDynamicProperty(`Cursed`, 1);
+        }
+      });
+    };
+  }
+  static {
+    this._abilities = [
+      {
+        tag: "\xA7r\xA7d[Active] Interact To UNLEASH Stored SOULS as HEALTH",
+        exec: _ActiveAbility._unleashSouls,
+        cooldown: 200
+      },
+      { tag: "\xA7r\xA7d[Active] Interact To Freeze Entities Briefly", exec: _ActiveAbility._freezeEntities, cooldown: 1 },
+      { tag: "\xA7r\xA7d[Active] Turn Poison Into Pleasure", exec: _ActiveAbility._poisonToRegen, cooldown: 1 },
+      { tag: "\xA7r\xA7d[Active] Interact To Get A HEALTH BOOST", exec: _ActiveAbility._simpleHealthBoost(3), cooldown: 1 },
+      { tag: "\xA7r\xA7d[Active] Interact To Get A COMBINED BUFF", exec: _ActiveAbility._combinedBuff, cooldown: 1 },
+      { tag: "\xA7r\xA7d[Active] Interact To Go INVISIBLE for a while", exec: _ActiveAbility._invisibility, cooldown: 1 },
+      { tag: "\xA7r\xA7d[Active] Interact To Get Buff For a SACRIFICE", exec: _ActiveAbility._selfSacrifice, cooldown: 1 },
+      { tag: "\xA7r\xA7d[Active] Interact To Summon WARDEN SPIRITS", exec: _ActiveAbility._wardenSpirits, cooldown: 1 },
+      { tag: "\xA7r\xA7d[Active] Interact To DASH forward", exec: _ActiveAbility._dashForward, cooldown: 400 },
+      { tag: "\xA7r\xA7d[Active] Interact To BOUNCE foes", exec: _ActiveAbility._bounceFoes, cooldown: 1 },
+      { tag: "\xA7r\xA7d[Active] Interact To Summon DIVINE LIGHTNING", exec: _ActiveAbility._divineLightning, cooldown: 1 },
+      { tag: "\xA7r\xA7d[Active] Interact To Summon FIREBALLS", exec: _ActiveAbility._summonFireballs, cooldown: 1 },
+      { tag: "\xA7r\xA7d[Active] Interact To Double Your JUMP HEIGHT", exec: _ActiveAbility._doubleJump, cooldown: 500 },
+      { tag: "\xA7r\xA7d[Active] Interact To BOOST Mining Speed", exec: _ActiveAbility._miningHaste, cooldown: 1 },
+      { tag: "\xA7r\xA7d[Active] Interact for WATER BREATHING", exec: _ActiveAbility._waterBreathing, cooldown: 1 },
+      { tag: "\xA7r\xA7d[Active] Interact To Create EXPLOSIONS", exec: _ActiveAbility._createExplosions, cooldown: 1 },
+      { tag: "\xA7r\xA7d[Active] Interact replaces HUNGER for HEALING", exec: _ActiveAbility._hungerToHealing, cooldown: 1 },
+      { tag: "\xA7r\xA7d[Active] WITHER mobs around you", exec: _ActiveAbility._witherAura, cooldown: 1 },
+      { tag: "\xA7r\xA7d[Active] DASH and set mobs on fire around you", exec: _ActiveAbility._dashFire, cooldown: 1 },
+      { tag: "\xA7r\xA7d[Active] Curse Entities Around", exec: _ActiveAbility._curseEntities, cooldown: 1 }
+    ];
+  }
+  static _cooldownReady(p) {
+    return (p.getDynamicProperty("interact_cooldown") ?? 0) === 0;
+  }
+  static _startCooldown(p, time) {
+    p.setDynamicProperty("interact_cooldown", time);
+  }
+};
+
+// scripts/handelers/itemUse.ts
+var itemUseHandler = class {
+  static itemUseHandler(itemStack, source) {
+    ActiveAbility.run(source, itemStack);
+  }
+};
+
+// scripts/handelers/runInterval.ts
+import { world as world8 } from "@minecraft/server";
+
+// scripts/features/playerProcessor.ts
+import { system as system7 } from "@minecraft/server";
+var playerProcessor = class {
+  static activeAbilityCooldown(player) {
+    let weaponInteract = player.getDynamicProperty("interact_cooldown") ?? 0;
+    if (typeof weaponInteract == `number`) {
+      if (weaponInteract !== 0) {
+        player.setDynamicProperty("interact_cooldown", weaponInteract + 10);
+      }
+      if (weaponInteract > 600) {
+        player.setDynamicProperty("interact_cooldown", 0);
+      }
+    }
+    player.dimension.getEntities().forEach((entity) => {
+      if (entity.typeId === "bey:radius_entity") {
+        system7.runTimeout(() => {
+          entity.runCommand(`/tp @s ~ 100 ~`);
+        }, 17);
+        system7.runTimeout(() => {
+          entity.runCommand(`/kill @s`);
+        }, 20);
+      }
+    });
+  }
+};
+
+// scripts/handelers/runInterval.ts
+var runInterval = class {
+  static runInterval() {
+    world8.getAllPlayers().forEach((player) => {
+      playerProcessor.activeAbilityCooldown(player);
+    });
+  }
+};
+
+// scripts/main.ts
+world9.afterEvents.itemUse.subscribe(({ source, itemStack }) => {
+  itemUseHandler.itemUseHandler(itemStack, source);
+});
+system9.runInterval(() => {
+  runInterval.runInterval();
+});
+weapon_passive();
+weapon_onhit();
+weapon_onhurt();
+weapon_cooldown();
 function initialize() {
   new WeaponCombiner();
 }
-weapon_passive();
-weapon_onhit();
-weapon_active();
-weapon_onhurt();
-weapon_cooldown();
 initialize();
 
 //# sourceMappingURL=../debug/main.js.map
