@@ -1,13 +1,20 @@
 import { WeaponCombiner } from "./weapon_combiner";
 import { weapon_passive } from "./weapon_ability_passive";
-import { weapon_onhit } from "./weapon_ability_onhit";
 import { weapon_onhurt } from "./weapon_ability_onhurt";
-import { system, world } from "@minecraft/server";
+
+import { Player, system, world } from "@minecraft/server";
 import { itemUseHandler } from "./handelers/itemUse";
+import { entityHitEntityHandler } from "./handelers/entityHitEntity";
 import { runInterval } from "./handelers/runInterval";
 
 world.afterEvents.itemUse.subscribe(({ source, itemStack }) => {
   itemUseHandler.itemUseHandler(itemStack, source);
+});
+
+world.afterEvents.entityHitEntity.subscribe(({ damagingEntity, hitEntity }) => {
+  if (damagingEntity instanceof Player) {
+    entityHitEntityHandler.entityHitEntityHandler(damagingEntity, hitEntity);
+  }
 });
 
 system.runInterval(() => {
@@ -15,7 +22,6 @@ system.runInterval(() => {
 });
 
 weapon_passive();
-weapon_onhit();
 weapon_onhurt();
 function initialize() {
   new WeaponCombiner();

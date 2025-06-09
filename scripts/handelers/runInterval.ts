@@ -5,7 +5,10 @@ export class runInterval {
   static runInterval() {
     world.getAllPlayers().forEach((player) => {
       playerProcessor.activeAbilityCooldown(player);
+      playerProcessor.onHitCooldown(player);
+
       playerProcessor.cooldownDisplay(player);
+      playerProcessor.cursedEntity(player);
     });
   }
 }

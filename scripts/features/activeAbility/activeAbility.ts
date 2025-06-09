@@ -1,13 +1,4 @@
-import {
-  world,
-  system,
-  Player,
-  Entity,
-  ItemStack,
-  EntityInventoryComponent,
-  EntityHealthComponent,
-  EntityDamageCause,
-} from "@minecraft/server";
+import { Player, Entity, ItemStack } from "@minecraft/server";
 import { activeAbilities } from "./activeAbilityHolder";
 
 type AbilityFn = (player: Player, held: ItemStack) => void;
